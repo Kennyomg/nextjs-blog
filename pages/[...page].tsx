@@ -6,7 +6,7 @@ builder.init(process.env.REACT_APP_BUILDER_API_KEY)
 // Get page data
 // https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
 export const getStaticProps: GetStaticProps = async (context) => {
-    const content = await builder.get('page', { url: `/${context.params.page.join("/")}` }).promise();
+    const content = await builder.get('page', { url: '/'+context.params.page }).promise();
 
     return {
         props: { content },
