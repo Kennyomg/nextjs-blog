@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout, { siteTitle } from '../components/layout'
@@ -24,6 +25,18 @@ export default function Home({
     id: string
   }[]
 }) {
+  const [data, setData] = useState([])
+
+  async function getData() {
+    const res = await fetch('/api/getCustomers')
+    const newData = await res.json()
+    setData(newData)
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <Layout home>
       <Head>
