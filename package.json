@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@builder.io/react": "^1.1.42",
     "date-fns": "^2.19.0",
     "faunadb": "^4.1.2",
     "gray-matter": "^4.0.2",
