@@ -16,7 +16,7 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
                 ),
                 ref => q.Get(ref)
             )
-        )
+        ) as { data: object }
         res.status(200).json(dbs.data)
     }
     catch(error) {
