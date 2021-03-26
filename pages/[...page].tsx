@@ -1,22 +1,12 @@
 import { builder, BuilderComponent } from '@builder.io/react'
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
 
 builder.init(process.env.REACT_APP_BUILDER_API_KEY)
-
-export default function BuilderPage(props) {
-    return (<>
-    {props.content && 
-        <BuilderComponent
-            content={props.content}
-            model="page" />
-    }
-    </>)
-}
 
 // Get page data
 // https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
 export const getStaticProps: GetStaticProps = async (context) => {
-    const content = await builder.get('page', { url: context.params.url }).promise();
+    const content = await builder.get('page', { url: `/${context.params.page.join("/")}` }).promise();
 
     return {
         props: { content },
@@ -40,9 +30,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: results.map((item) => ({
             params: {
-                page: item.data.url.substr(1)
+                page: [item.data.url]
             }
         })),
         fallback: true
     }
+}
+
+export default function BuilderPage(props) {
+    console.log(props)
+    return (<>
+    {props?.content && 
+        <BuilderComponent
+            content={props.content}
+            model="page" />
+    }
+    </>)
 }
