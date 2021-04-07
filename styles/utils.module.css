@@ -50,3 +50,80 @@
 .lightText {
     color: #666;
 }
+
+.cd {
+    height: 200vh;
+    width: 200vh;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 105vh;
+    left: 50vw;
+    transition: all .5s ease-in-out;
+}
+
+.cdActive {
+    top: 95vh;
+}
+
+.cdIndex1 {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+}
+
+.cdIndex2 {
+    transform: translate(-50%, -50%) rotateZ(90deg);
+}
+
+.cdIndex3 {
+    transform: translate(-50%, -50%) rotateZ(180deg);
+}
+
+.cdIndex4 {
+    transform: translate(-50%, -50%) rotateZ(270deg);
+}
+
+.cdBg { 
+    border-radius: 999999px;
+    background-color: #F2F2F2;
+    width: 100%;
+    height: 100%;
+}
+
+.cdNav {
+    background-color: #DFDFDF;
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    display: block;
+    border-radius: 999999px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cdNav svg {
+    position: absolute;
+    transform: translate(-50%, -50%)
+}
+
+.cdNav svg:first-child {
+    left: 50%;
+    top: 20%;
+}
+
+.cdNav svg:nth-child(2) {
+    left: 20%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateZ(90deg);
+}
+
+.cdNav svg:nth-child(3) {
+    left: 50%;
+    top: 80%;
+    transform: translate(-50%, -50%) rotateZ(180deg);
+}
+
+.cdNav svg:nth-child(4) {
+    left: 80%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateZ(270deg);
+}

@@ -4,7 +4,7 @@ import Date from '../../components/date'
 import { getAllPostIds, getPostData } from '../../lib/posts'
 import utilStyles from '../../styles/utils.module.css'
 
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const postData = await getPostData(params.id as string)

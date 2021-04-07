@@ -1,4 +1,5 @@
 import { builder, BuilderComponent } from '@builder.io/react'
+import { BuilderContent } from '@builder.io/sdk';
 import { GetStaticProps, GetStaticPaths } from 'next'
 
 builder.init(process.env.REACT_APP_BUILDER_API_KEY)
@@ -37,8 +38,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export default function BuilderPage(props) {
-    console.log(props)
+export default function BuilderPage(props: { content: BuilderContent; }) {
+    // console.log(props)
     return (<>
     {props?.content && 
         <BuilderComponent
