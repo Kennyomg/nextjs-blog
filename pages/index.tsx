@@ -11,7 +11,7 @@ export default function Home() {
   const [showNav, setShowNav] = useState(false);
   const [activeNavIndex, setActiveNavIndex] = useState('');
   const [navRotation, setNavRotation] = useState(0);
-  let previousTouch: Touch;
+  let previousTouch;
 
   return (
     <Layout>
@@ -27,15 +27,11 @@ export default function Home() {
           onMouseEnter={() => setShowNav(true)}
           onMouseLeave={() => setShowNav(false)}
           onTouchMove={(e) => {
-            let rotation = e.rotation;
-
             if (previousTouch) {
-              if (!rotation) {
-                rotation = Math.atan2(previousTouch.pageY - e.touches[0].pageY, previousTouch.pageX - e.touches[0].pageX) * 180 / Math.PI;
-              }
-              console.log(rotation);
+              let rotation = Math.atan2(previousTouch.pageY - e.touches[0].pageY, previousTouch.pageX - e.touches[0].pageX) * 180 / Math.PI;
               setNavRotation(rotation);
             }
+
             previousTouch = e.touches[0]
           }}
         >
