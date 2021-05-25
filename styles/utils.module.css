@@ -52,8 +52,8 @@
 }
 
 .cd {
-    height: 200vh;
-    width: 200vh;
+    height: 185vh;
+    width: 185vh;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 105vh;
@@ -107,23 +107,85 @@
 
 .cdNav svg:first-child {
     left: 50%;
-    top: 20%;
+    top: 15%;
 }
 
 .cdNav svg:nth-child(2) {
-    left: 20%;
+    left: 15%;
     top: 50%;
     transform: translate(-50%, -50%) rotateZ(90deg);
 }
 
 .cdNav svg:nth-child(3) {
     left: 50%;
-    top: 80%;
+    top: 85%;
     transform: translate(-50%, -50%) rotateZ(180deg);
 }
 
 .cdNav svg:nth-child(4) {
-    left: 80%;
+    left: 85%;
     top: 50%;
     transform: translate(-50%, -50%) rotateZ(270deg);
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: #DFDFDF;
+    height: 60px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header::after {
+    content: '';
+    width: 100vw;
+    height: 4px;
+    background: linear-gradient(to bottom, #DFDFDF, #C4C4C4);
+    position:absolute;
+    bottom: -4px;
+    box-shadow: 0px 3px 4px 0 rgba(0, 0, 0, 25%);
+    left:0;
+}
+
+.button {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    box-shadow: -2.24px 1.24px 2.56px 0 #C9C9C9 inset, 2.24px -1.24px 2.56px 0 #FFFFFF inset, 0 1px 1px 0 rgba(0, 0, 0, 25%);
+    background: linear-gradient(to bottom right, #D4D4D4, #FFFFFF);
+}
+
+.round {
+    border-radius: 50px;
+}
+
+.rounded {
+    border-radius: 4px;
+}
+
+.quoteIcon {
+    margin-left: 60px;
+    margin-right: 24px;
+}
+
+.quoteIcon::before {
+    content: '';
+    background: url('/images/quotes.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    display: block;
+    background-position: center;
+    left: -45px;
+
+}
+
+.fillWidth {
+    width: calc(100vw - 60px * 3 - 14px);
 }

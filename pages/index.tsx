@@ -27,6 +27,11 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <div className={`${utilStyles.header}`}>
+        <div className={`${utilStyles.button} ${utilStyles.rounded}`}></div>
+        <div className={`${utilStyles.quoteIcon} ${utilStyles.button} ${utilStyles.round} ${utilStyles.fillWidth}`}></div>
+        <div className={`${utilStyles.button} ${utilStyles.round}`}></div>
+      </div>
       <div 
         className={`${utilStyles.cd} ${showNav && utilStyles.cdActive} ${activeNavIndex ? utilStyles['cdIndex' + activeNavIndex] : utilStyles.cdIndex1}`} 
         style={{transform: `translate(-50%, -50%) rotateZ(${navRotation}deg)`}}>
