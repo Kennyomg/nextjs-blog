@@ -1,0 +1,14 @@
+{
+    "name": "Casual Happy Jar",
+    "short_name": "Happy Jar",
+    "icons": [
+        {
+            "src": "/public/images/JarIcon.svg",
+            "purpose": "maskable any",
+            "sizes": "any"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
