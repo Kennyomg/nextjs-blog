@@ -47,7 +47,7 @@ class MyDocument extends Document {
             <meta property='og:url' content='https://yourdomain.com' />
             <meta property='og:image' content='https://yourdomain.com/static/icons/apple-touch-icon.png' />
 
-            {'<!--'} apple splash screen images {'-->'}
+            {/* {'<!--'} apple splash screen images {'-->'}
             {'<!--'}
             <link rel='apple-touch-startup-image' href='/static/images/apple_splash_2048.png' sizes='2048x2732' />
             <link rel='apple-touch-startup-image' href='/static/images/apple_splash_1668.png' sizes='1668x2224' />
@@ -56,7 +56,7 @@ class MyDocument extends Document {
             <link rel='apple-touch-startup-image' href='/static/images/apple_splash_1242.png' sizes='1242x2208' />
             <link rel='apple-touch-startup-image' href='/static/images/apple_splash_750.png' sizes='750x1334' />
             <link rel='apple-touch-startup-image' href='/static/images/apple_splash_640.png' sizes='640x1136' />
-            {'-->'}
+            {'-->'} */}
         </Head>
         <body>
           <Main />
