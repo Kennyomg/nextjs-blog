@@ -3,7 +3,7 @@
     "short_name": "Happy Jar",
     "icons": [
         {
-            "src": "/images/JarIcon.svg",
+            "src": "/images/JarSquareRatio.svg",
             "purpose": "maskable any",
             "sizes": "any"
         }
