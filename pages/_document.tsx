@@ -23,9 +23,9 @@ class MyDocument extends Document {
             <meta name='theme-color' content='#000000' />
 
             <link rel='apple-touch-icon' href='/icons/Jar-iphone.png' />
-            <link rel="apple-touch-icon" sizes="57x57" href="/icons/Jar-iphone.png">
-            <link rel="apple-touch-icon" sizes="76x76" href="/icons/Jar-ipad-small.png">
-            <link rel="apple-touch-icon" sizes="120x120" href="/icons/Jar-iphone-retina.png">
+            <link rel="apple-touch-icon" sizes="57x57" href="/icons/Jar-iphone.png" />
+            <link rel="apple-touch-icon" sizes="76x76" href="/icons/Jar-ipad-small.png" />
+            <link rel="apple-touch-icon" sizes="120x120" href="/icons/Jar-iphone-retina.png" />
             <link rel='apple-touch-icon' sizes='152x152' href='/icons/Jar-ipad.png' />
             <link rel='apple-touch-icon' sizes='167x167' href='/icons/Jar-ipad-retina.png' />
             <link rel='apple-touch-icon' sizes='180x180' href='/icons/Jar-iphone-retina.png' />
