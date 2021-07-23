@@ -62,7 +62,7 @@
 }
 
 .cdActive {
-    top: 95vh;
+    top: calc(50vh + 60px);
 }
 
 .cdIndex1 {
@@ -91,8 +91,8 @@
 .cdNav {
     background-color: #DFDFDF;
     position: absolute;
-    width: 50vw;
-    height: 50vw;
+    width: calc(185vh / var(--phi-4));
+    height: calc(185vh / var(--phi-4));
     display: block;
     border-radius: 999999px;
     top: 50%;
@@ -107,23 +107,23 @@
 
 .cdNav svg:first-child {
     left: 50%;
-    top: 15%;
+    top: 17%;
 }
 
 .cdNav svg:nth-child(2) {
-    left: 15%;
+    left: 17%;
     top: 50%;
     transform: translate(-50%, -50%) rotateZ(90deg);
 }
 
 .cdNav svg:nth-child(3) {
     left: 50%;
-    top: 85%;
+    top: 83%;
     transform: translate(-50%, -50%) rotateZ(180deg);
 }
 
 .cdNav svg:nth-child(4) {
-    left: 85%;
+    left: 83%;
     top: 50%;
     transform: translate(-50%, -50%) rotateZ(270deg);
 }

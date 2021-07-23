@@ -1,3 +1,10 @@
+html {
+    --phi-1: 1.618;
+    --phi-2: calc(var(--phi-1) * var(--phi-1) );
+    --phi-3: calc(var(--phi-2) * var(--phi-1) );
+    --phi-4: calc(var(--phi-3) * var(--phi-1) );
+}
+
 html,
 body {
     padding: 0;
