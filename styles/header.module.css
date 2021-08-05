@@ -1,0 +1,23 @@
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: #DFDFDF;
+    height: 60px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    z-index: 2;
+}
+
+.header::after {
+    content: '';
+    width: 100vw;
+    height: 4px;
+    background: linear-gradient(to bottom, #DFDFDF, #C4C4C4);
+    position:absolute;
+    bottom: -4px;
+    box-shadow: 0px 3px 4px 0 rgba(0, 0, 0, 25%);
+    left:0;
+}

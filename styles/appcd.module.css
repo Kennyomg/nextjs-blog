@@ -1,0 +1,96 @@
+
+
+.cd {
+    height: 185vh;
+    width: 185vh;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 105vh;
+    left: 50vw;
+    transition: all .5s ease-in-out;
+}
+
+.cdActive {
+    top: calc(50vh + 60px);
+}
+
+.cdIndex1 {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+}
+
+.cdIndex2 {
+    transform: translate(-50%, -50%) rotateZ(90deg);
+}
+
+.cdIndex3 {
+    transform: translate(-50%, -50%) rotateZ(180deg);
+}
+
+.cdIndex4 {
+    transform: translate(-50%, -50%) rotateZ(270deg);
+}
+
+.cdBg { 
+    border-radius: 999999px;
+    background-color: #F2F2F2;
+    width: 100%;
+    height: 100%;
+}
+
+.cdNav {
+    background-color: #DFDFDF;
+    position: absolute;
+    width: calc(185vh / var(--phi-4));
+    height: calc(185vh / var(--phi-4));
+    display: block;
+    border-radius: 999999px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cdNav::after {
+    content: '';
+    border-radius: 9999999px;
+    min-width: calc(185vh / var(--phi-6));
+    min-height: calc(185vh / var(--phi-6));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    /* color: transparent; */
+    background-image: url('/images/wood-background-horizontal.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.cdNav div {
+    position: absolute;
+    transform: translate(-50%, -50%)
+}
+
+.cdNav div:first-child {
+    left: 50%;
+    top: 17%;
+}
+
+.cdNav div:nth-child(2) {
+    left: 17%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateZ(90deg);
+}
+
+.cdNav div:nth-child(3) {
+    left: 50%;
+    top: 83%;
+    transform: translate(-50%, -50%) rotateZ(180deg);
+}
+
+.cdNav div:nth-child(4) {
+    left: 83%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateZ(270deg);
+}

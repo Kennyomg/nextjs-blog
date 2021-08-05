@@ -3,6 +3,11 @@ html {
     --phi-2: calc(var(--phi-1) * var(--phi-1) );
     --phi-3: calc(var(--phi-2) * var(--phi-1) );
     --phi-4: calc(var(--phi-3) * var(--phi-1) );
+    --phi-5: calc(var(--phi-4) * var(--phi-1) );
+    --phi-6: calc(var(--phi-5) * var(--phi-1) );
+    --phi-7: calc(var(--phi-6) * var(--phi-1) );
+
+    --circle-radius: 9999999px;
 }
 
 html,
@@ -17,6 +22,7 @@ body {
     max-width: 100vw;
     max-height: 100vh;
     overflow: hidden;
+    background: url('/images/wood-background-horizontal.jpg');
 }
 
 * {

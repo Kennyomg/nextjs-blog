@@ -1,0 +1,88 @@
+.startCD {
+    position: absolute;
+    width: calc(100vw / var(--phi-1));
+    height: calc(100vw / var(--phi-1));
+    border-radius: 0;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    display: block;
+    z-index: 1;
+    transition: all .5s ease-in-out;
+}
+
+.startCD:not(.showForm) {
+    border-radius: 50%;
+}
+
+.loginButton {
+    position: absolute;
+    width: calc(100vw / var(--phi-1) / 2);
+    height: calc(100vw / var(--phi-1));
+    display: block;
+    background-color: palevioletred;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    border-top-left-radius: var(--circle-radius);
+    border-bottom-left-radius: var(--circle-radius);
+    transition: all .5s ease-in-out;
+}
+
+.middleSeparator {
+    position: absolute;
+    width: calc(100vw / var(--phi-4));
+    height: calc(100vw / var(--phi-4));
+    display: block;
+    background-color: paleturquoise;
+    border-radius: var(--circle-radius);
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all .5s ease-in-out;
+}
+
+.registerButton {
+    position: absolute;
+    width: calc(100vw / var(--phi-1) / 2);
+    height: calc(100vw / var(--phi-1));
+    background-color: palegoldenrod;
+    display: block;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    border-top-right-radius: var(--circle-radius);
+    border-bottom-right-radius: var(--circle-radius);
+    transition: all .5s ease-in-out;
+}
+
+.showForm .loginButton {
+    left: -50%;
+}
+
+.submitButton {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all .5s ease-in-out;
+}
+
+.submitButton.loginSubmit {
+    background: palevioletred;
+}
+
+.submitButton.registerSubmit {
+    background-color: palegoldenrod;
+}
+
+.showForm .registerButton {
+    right: -50%;
+}
