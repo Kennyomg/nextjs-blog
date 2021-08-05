@@ -6,6 +6,7 @@ import Date from '../components/date'
 import utilStyles from '../styles/utils.module.css'
 import appCDStyles from '../styles/appcd.module.css'
 import headerStyles from '../styles/header.module.css'
+import letterStyles from '../styles/letter.module.css'
 import startCDStyles from '../styles/startcd.module.css'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 
@@ -81,8 +82,8 @@ export default function Home() {
   const [ showRegisterForm, setShowRegisterForm ] = useState(false)
   const [ showLoginForm, setShowLoginForm ] = useState(false)
   const [ showLetter, setShowLetter ] = useState(false)
-  const buttonMorph = useMorph()
-  const screenMorph = useMorph()
+  // const buttonMorph = useMorph()
+  // const screenMorph = useMorph()
 
   return (
     <Layout>
@@ -96,7 +97,7 @@ export default function Home() {
       </div>
       {
         loggedIn ? (
-          <div {...screenMorph}
+          <div
             className={
               `${appCDStyles.cd} 
                ${showNav && appCDStyles.cdActive}
@@ -121,26 +122,44 @@ export default function Home() {
               </nav>
           </div>
         ) : (
-          <div {...screenMorph} onClick={_ => {
+          <div onClick={_ => {
             if (showLoginForm) {
               setShowLoginForm(false)
             }
             if (showRegisterForm) {
               setShowRegisterForm(false);
             }
-          }}>
-              <div className={
-                    `${startCDStyles.startCD}
-                     ${(showLoginForm || showRegisterForm) && startCDStyles.showForm }`
+            if (showLetter) {
+              setShowLetter(false);
+            }
+          }} style={{width: '100vw', height: '100vh', position: 'absolute'}}>
+            <div>
+                <div className={
+                  `${startCDStyles.startCD} ${appCDStyles.cd}
+                  ${(showLoginForm || showRegisterForm) && startCDStyles.showForm }`
                 }>
-                <div onClick={_ => setShowLoginForm(true)} className={`${startCDStyles.loginButton}`}></div>
-                {(showLoginForm || showRegisterForm) ?
-                  <div {...buttonMorph} onClick={_ => setLoggedIn(true)} className={`${startCDStyles.submitButton} ${showLoginForm && startCDStyles.loginSubmit} ${showRegisterForm && startCDStyles.registerSubmit}`}>Submit</div>
-                  :
-                  <div {...buttonMorph} className={`${startCDStyles.middleSeparator}`}></div>
-                }
-                <div onClick={_ => setShowRegisterForm(true)} className={`${startCDStyles.registerButton}`}></div>
-              </div>
+                  <div onClick={_ => setShowLoginForm(true)} className={`${startCDStyles.loginButton}`}>Login</div>
+                  {(showLoginForm || showRegisterForm) ?
+                    <div onClick={_ => setLoggedIn(true)} className={`${startCDStyles.middleSeparator} ${startCDStyles.submitButton} ${showLoginForm && startCDStyles.loginSubmit} ${showRegisterForm && startCDStyles.registerSubmit}`}>Submit</div>
+                    :
+                    <div className={`${startCDStyles.middleSeparator}`}></div>
+                  }
+                  <div onClick={_ => setShowRegisterForm(true)} className={`${startCDStyles.registerButton}`}>Register</div>
+                </div>
+            </div>
+            <div onClick={_ => setShowLetter(true)} className={`${letterStyles.letter} ${showLetter && letterStyles.showLetter}`}>
+                  <h1>Hello reader</h1>
+                  <p>
+                    Thank you for visiting this app.
+                    I hope you will enjoy it!
+                  </p>
+                  <p>
+                    I want to inform you of how we gather data and for what purpose we will use it.
+                  </p>
+                  <p>
+                    You can visit our Questions and Answers section <a href="#">here</a>
+                  </p>
+            </div>
           </div>
         )
       }

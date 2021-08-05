@@ -1,0 +1,19 @@
+.letter {
+    position: absolute;
+    bottom: 5em;
+    width: calc(100vw / var(--phi-1));
+    min-width: 266px;
+    display: block;
+    z-index: 2;
+    left: 50vw;
+    transform: translate(-50%, 100%);
+    background: white;
+    padding: 2em;
+    padding-top: 0.5em;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+}
+
+.letter.showLetter {
+    bottom: calc(100% / var(--phi-1));
+}
