@@ -8,6 +8,11 @@ html {
     --phi-7: calc(var(--phi-6) * var(--phi-1) );
 
     --circle-radius: 9999999px;
+
+    --color-1: palevioletred;
+    --color-2: palegoldenrod;
+    --color-3: palegreen;
+    --color-4: paleturquoise;
 }
 
 html,
