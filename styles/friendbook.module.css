@@ -1,0 +1,14 @@
+.friendbook {
+    width: 346px;
+    height: 242px;
+}
+
+.leftpage {
+    width: 50%;
+    float: left;
+}
+
+.rightpage {
+    width: 50%;
+    float: right;
+}

@@ -57,6 +57,11 @@
     position: absolute;
     transform: translate(-50%, -50%);
     cursor: pointer;
+    z-index: 999;
+}
+
+.cdNav object svg {
+    cursor: pointer;
 }
 
 .cdNav div:first-child {
@@ -71,7 +76,7 @@
 .cdNav div:nth-child(2) {
     left: 83%;
     top: 50%;
-    transform: translate(-50%, -50%) rotateZ(270deg);
+    transform: translate(-50%, -50%) rotateZ(90deg);
 }
 
 .cdNav div:nth-child(2) path {
@@ -84,6 +89,16 @@
     transform: translate(-50%, -50%) rotateZ(180deg);
 }
 
+.cdNav img {
+    width: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+}
+
 .cdNav div:nth-child(3) path {
     fill: var(--color-3);
 }
@@ -91,7 +106,7 @@
 .cdNav div:nth-child(4) {
     left: 17%;
     top: 50%;
-    transform: translate(-50%, -50%) rotateZ(90deg);
+    transform: translate(-50%, -50%) rotateZ(270deg);
 }
 
 .cdNav div:nth-child(4) path {
