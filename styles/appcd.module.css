@@ -60,7 +60,7 @@
     z-index: 999;
 }
 
-.cdNav object svg {
+.cdNav svg {
     cursor: pointer;
 }
 
@@ -99,7 +99,7 @@
     max-height: 30px !important;
 }
 
-.cdNav div:nth-child(3) path {
+.cdNav div:nth-child(3) rect {
     fill: var(--color-3);
 }
 
@@ -121,7 +121,7 @@
 }
 
 .section1 {
-    background-color: var(--color-1);
+    /* background-color: var(--color-1); */
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -146,4 +146,66 @@
     top: 50%;
     left: 20%;
     transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/* Dropshadow for nav items */
+
+/* Nav 0 active */
+.cdNav div g * {
+    transition: filter .3s ease-in-out;
+}
+
+.nav-active-0 div:first-child g * {
+    filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-0 div:nth-child(2) g * {
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-0 div:nth-child(3) g * {
+    filter: drop-shadow(2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-0 div:nth-child(4) g * {
+    filter: drop-shadow(-2px -2px 1px rgba(0, 0, 0, 25%));
+}
+
+/* Nav 1 active */
+.nav-active-1 div:first-child g * {
+    filter: drop-shadow(-2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-1 div:nth-child(2) g * {
+    filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-1 div:nth-child(3) g * {
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-1 div:nth-child(4) g * {
+    filter: drop-shadow(2px -2px 1px rgba(0, 0, 0, 25%));
+}
+
+/* Nav 2 active */
+.nav-active-2 div:first-child g * {
+    filter: drop-shadow(2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-2 div:nth-child(2) g * {
+    filter: drop-shadow(-2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-2 div:nth-child(3) g * {
+    filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-2 div:nth-child(4) g * {
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 25%));
+}
+
+/* Nav 3 active */
+.nav-active-3 div:first-child g * {
+    filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-3 div:nth-child(2) g * {
+    filter: drop-shadow(2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-3 div:nth-child(3) g * {
+    filter: drop-shadow(-2px -2px 1px rgba(0, 0, 0, 25%));
+}
+.nav-active-3 div:nth-child(4) g * {
+    filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
 }

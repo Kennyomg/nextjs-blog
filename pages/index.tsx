@@ -16,20 +16,24 @@ import writetoolsStyles from '../styles/writetools.module.css'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
 
-import JarIcon from '../public/images/jarIcon.svg';
-import ProfileIcon from '../public/images/ProfileIcon.svg';
-import BookIcon from '../public/images/BookIcon.svg';
-import WriteMessageIcon from '../public/images/WriteMessageIcon.svg';
+// import JarIcon from '../public/images/jarIcon.svg';
+// import ProfileIcon from '../public/images/ProfileIcon.svg';
+// import BookIcon from '../public/images/BookIcon.svg';
+// import WriteMessageIcon from '../public/images/WriteMessageIcon.svg';
 
 const navItems = [
   // <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.0614 3.19685C24.0614 1.43128 22.6301 0 20.8645 0H5.13545C3.36988 0 1.9386 1.43128 1.9386 3.19685V5.92763C1.9386 6.18503 2.14726 6.3937 2.40467 6.3937C2.807 6.3937 3.02702 6.87539 2.7835 7.19565C1.04017 9.48833 0 12.3821 0 15.5276C0 22.9682 5.8203 29 13 29C20.1797 29 26 22.9682 26 15.5276C26 12.3821 24.9598 9.48833 23.2165 7.19565C22.973 6.87539 23.193 6.3937 23.5953 6.3937C23.8527 6.3937 24.0614 6.18503 24.0614 5.92763V3.19685Z"/></svg>,
   // <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.42161 17.0476C-1.36061 13.05 1.67981 6.48395 7.17502 6.78226C9.51968 6.90955 11.7286 5.67738 12.8521 3.61551C15.4853 -1.21694 22.6695 -0.354339 24.0839 4.9641C24.6874 7.23334 26.5419 8.9534 28.85 9.38477C34.2597 10.3958 35.6593 17.4949 31.0383 20.4836C29.0666 21.7588 28.0038 24.054 28.3067 26.3825C29.0169 31.8398 22.6977 35.3647 18.4273 31.8933C16.6053 30.4122 14.094 30.1107 11.9731 31.1184C7.00233 33.4801 1.69722 28.5595 3.67905 23.4254C4.52464 21.2349 4.03538 18.7533 2.42161 17.0476Z"/></svg>,
   // <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.0614 3.19685C24.0614 1.43128 22.6301 0 20.8645 0H5.13545C3.36988 0 1.9386 1.43128 1.9386 3.19685V5.92763C1.9386 6.18503 2.14726 6.3937 2.40467 6.3937C2.807 6.3937 3.02702 6.87539 2.7835 7.19565C1.04017 9.48833 0 12.3821 0 15.5276C0 22.9682 5.8203 29 13 29C20.1797 29 26 22.9682 26 15.5276C26 12.3821 24.9598 9.48833 23.2165 7.19565C22.973 6.87539 23.193 6.3937 23.5953 6.3937C23.8527 6.3937 24.0614 6.18503 24.0614 5.92763V3.19685Z" /></svg>,
   // <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.42161 17.0476C-1.36061 13.05 1.67981 6.48395 7.17502 6.78226C9.51968 6.90955 11.7286 5.67738 12.8521 3.61551C15.4853 -1.21694 22.6695 -0.354339 24.0839 4.9641C24.6874 7.23334 26.5419 8.9534 28.85 9.38477C34.2597 10.3958 35.6593 17.4949 31.0383 20.4836C29.0666 21.7588 28.0038 24.054 28.3067 26.3825C29.0169 31.8398 22.6977 35.3647 18.4273 31.8933C16.6053 30.4122 14.094 30.1107 11.9731 31.1184C7.00233 33.4801 1.69722 28.5595 3.67905 23.4254C4.52464 21.2349 4.03538 18.7533 2.42161 17.0476Z"/></svg>
-  (<object type="image/svg+xml" data={JarIcon} />),
-  (<object type="image/svg+xml" data={ProfileIcon} />),
-  (<object type="image/svg+xml" data={BookIcon} />),
-  (<object type="image/svg+xml" data={WriteMessageIcon} />),
+  // (<object type="image/svg+xml" data={JarIcon} />),
+  // (<object type="image/svg+xml" data={ProfileIcon} />),
+  // (<object type="image/svg+xml" data={BookIcon} />),
+  // (<object type="image/svg+xml" data={WriteMessageIcon} />),
+  (<svg width="28" height="31" viewBox="0 0 28 31" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M26.0614 3.19685C26.0614 1.43128 24.6301 0 22.8645 0H7.13545C5.36988 0 3.9386 1.43128 3.9386 3.19685V5.92763C3.9386 6.18503 4.14726 6.3937 4.40467 6.3937C4.807 6.3937 5.02702 6.87539 4.7835 7.19565C3.04017 9.48833 2 12.3821 2 15.5276C2 22.9682 7.8203 29 15 29C22.1797 29 28 22.9682 28 15.5276C28 12.3821 26.9598 9.48833 25.2165 7.19565C24.973 6.87539 25.193 6.3937 25.5953 6.3937C25.8527 6.3937 26.0614 6.18503 26.0614 5.92763V3.19685Z" fill="#F2F2F2"/></g></svg>),
+  (<svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#pi_clip0)"><path d="M14.3138 26.5399H2.68606C2.68606 26.5399 0.773584 10.9832 8.49991 10.9832C16.2262 10.9832 14.3138 26.5399 14.3138 26.5399V26.5399Z" fill="white"/><path d="M14.3137 27.0001H2.68628C2.44842 27.0001 2.24775 26.8261 2.21928 26.5945C2.16785 26.1741 0.995046 16.2484 4.64937 12.2136C5.66558 11.0913 6.96099 10.5225 8.49977 10.5225C10.0386 10.5225 11.3344 11.0913 12.3506 12.2136C16.005 16.2484 14.8322 26.1741 14.7807 26.5945C14.7523 26.8261 14.5516 27.0001 14.3137 27.0001ZM3.11105 26.0792H13.889C14.068 24.1785 14.6283 16.1157 11.6467 12.8242C10.805 11.8948 9.77543 11.4434 8.49977 11.4434C7.22411 11.4434 6.19504 11.8948 5.35332 12.8238C2.37173 16.1153 2.93196 24.1785 3.11105 26.0792V26.0792Z" fill="white"/><path d="M8.49991 9.24984C10.9786 9.24984 12.988 7.28222 12.988 4.85503C12.988 2.42783 10.9786 0.460205 8.49991 0.460205C6.02119 0.460205 4.0118 2.42783 4.0118 4.85503C4.0118 7.28222 6.02119 9.24984 8.49991 9.24984Z" fill="white"/><path d="M8.49977 9.71031C5.76615 9.71031 3.54178 7.53218 3.54178 4.85493C3.54178 2.17813 5.76615 0 8.49977 0C11.2339 0 13.4582 2.17813 13.4582 4.85493C13.4582 7.53218 11.2339 9.71031 8.49977 9.71031ZM8.49977 0.920894C6.28459 0.920894 4.48222 2.68579 4.48222 4.85493C4.48222 7.02452 6.28459 8.78941 8.49977 8.78941C10.7154 8.78941 12.5178 7.02452 12.5178 4.85493C12.5178 2.68579 10.7154 0.920894 8.49977 0.920894V0.920894Z" fill="white"/></g><defs><clipPath id="pi_clip0"><rect width="13" height="27" fill="white" transform="translate(2)"/></clipPath></defs></svg>),
+  (<svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg"><g><rect x="5" y="3" width="16" height="22" fill="#F2F2F2"/><rect x="21" y="3" width="16" height="22" fill="#F2F2F2"/></g></svg>),
+  (<svg width="50" height="29" viewBox="0 0 50 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M14 4H46V27H2V16L14 4Z" fill="white"/></g><g><path d="M2 16H14V4L2 16Z" fill="white"/></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M47.6357 4.54386L45.0393 1.9474L45.0392 1.94737L42.9688 0.123333L42.9687 0.123171L27.2025 15.8894L27.2041 16.1374L27.1875 16.1207L27.2177 19.3513L27.2091 19.3448L27.2091 19.3508L27.2056 19.3482L27.2455 22.331L27.2456 22.3353L27.2456 22.3375L27.2476 22.3375L30.2349 22.3775L30.2259 22.3654L33.4624 22.3956L33.4457 22.379L33.6937 22.3806L33.6937 22.3806L49.4599 6.61442L47.6357 4.54388L47.5126 4.66705L47.5126 4.66704L47.6357 4.54386ZM31.6232 20.5564L31.7464 20.4333L31.7463 20.4332L31.6232 20.5564L31.6232 20.5564Z" fill="white"/></g></svg>)
 ]
 
 
@@ -121,9 +125,93 @@ export default function Home() {
             <div className={appCDStyles.cdBg}>
               <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
                 <div className={jarStyles.jar}>
-                  <div className={jarStyles.bottom}></div>
+                  <div className={jarStyles.bottom}>
+                    <svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g filter="url(#filter0_biiii)">
+                        <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
+                      </g>
+                      <defs>
+                        <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="-4.32" dy="4.32"/>
+                          <feGaussianBlur stdDeviation="2.16"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="-2.16" dy="2.16"/>
+                          <feGaussianBlur stdDeviation="1.08"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="4.32" dy="-4.32"/>
+                          <feGaussianBlur stdDeviation="2.16"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="2.16" dy="-2.16"/>
+                          <feGaussianBlur stdDeviation="1.08"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+                        </filter>
+                      </defs>
+                    </svg>
+                  </div>
                   <div className={jarStyles.item}></div>
-                  <div className={jarStyles.rim}></div>
+                  <div className={jarStyles.rim}>
+                    <svg width="227" height="227" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g filter="url(#filter1_biiii)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
+                      </g>
+                      <defs>
+                        <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="-4.32" dy="4.32"/>
+                          <feGaussianBlur stdDeviation="2.16"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="-2.16" dy="2.16"/>
+                          <feGaussianBlur stdDeviation="1.08"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="4.32" dy="-4.32"/>
+                          <feGaussianBlur stdDeviation="2.16"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+
+                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                          <feOffset dx="2.16" dy="-2.16"/>
+                          <feGaussianBlur stdDeviation="1.08"/>
+                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+                        </filter>
+                      </defs>
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div className={`${appCDStyles.section} ${appCDStyles.section2}`}>
@@ -140,7 +228,7 @@ export default function Home() {
               </div>
             </div>
             <nav 
-              className={appCDStyles.cdNav}
+              className={`${appCDStyles.cdNav} ${appCDStyles['nav-active-'+activeNavIndex]}`}
               onClick={(e) => { setShowNav(true); stopEventProp(e) }}
               // onTouchMove={(e) => getAngleFromEvent(e, setNavRotation)}
               // onMouseMove={(e) => getAngleFromEvent(e, setNavRotation)}
