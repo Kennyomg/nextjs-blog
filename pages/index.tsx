@@ -13,6 +13,7 @@ import jarStyles from '../styles/jar.module.css'
 import tabletStyles from '../styles/tablet.module.css'
 import friendbookStyles from '../styles/friendbook.module.css'
 import writetoolsStyles from '../styles/writetools.module.css'
+import messageStyles from '../styles/message.module.css'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
 
@@ -168,7 +169,37 @@ export default function Home() {
                       </defs>
                     </svg>
                   </div>
-                  <div className={jarStyles.item}></div>
+                  <ul className={jarStyles.itemList}>
+                    <li className={`${jarStyles.item} ${messageStyles.star}`}>
+                      <svg width="35" height="33" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.heart}`}>
+                      <svg width="34" height="35" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill="#C4C4C4"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.candy}`}>
+                      <svg width="56" height="35" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="28.0441" cy="17.0442" r="10.3423" fill="#C4C4C4"/>
+                        <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill="#C4C4C4"/>
+                        <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill="#C4C4C4"/>
+                        <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill="#C4C4C4"/>
+                        <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill="#C4C4C4"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.flower}`}>
+                      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="7" r="7" fill="#DB4545"/>
+                        <circle cx="23" cy="14" r="7" fill="#DB4545"/>
+                        <circle cx="20" cy="23" r="7" fill="#DB4545"/>
+                        <circle cx="10" cy="23" r="7" fill="#DB4545"/>
+                        <circle cx="7" cy="14" r="7" fill="#DB4545"/>
+                        <circle cx="15" cy="16" r="6" fill="#FA8888"/>
+                      </svg>
+                    </li>
+                  </ul>
                   <div className={jarStyles.rim}>
                     <svg width="227" height="227" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g filter="url(#filter1_biiii)">
@@ -223,8 +254,71 @@ export default function Home() {
                   <div className={`${friendbookStyles.rightpage}`}></div>
                 </div>
               </div>
-              <div className={`${appCDStyles.section} ${appCDStyles.section4}`}>
-                <div className={`${writetoolsStyles.writetools}`}></div>
+              <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
+                <ul className={`${writetoolsStyles.shapes}`}>
+                    <li className={`${jarStyles.item} ${messageStyles.star}`}>
+                      <svg width="35" height="33" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.heart}`}>
+                      <svg width="34" height="35" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill="#C4C4C4"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.candy}`}>
+                      <svg width="56" height="35" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="28.0441" cy="17.0442" r="10.3423" fill="#C4C4C4"/>
+                        <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill="#C4C4C4"/>
+                        <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill="#C4C4C4"/>
+                        <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill="#C4C4C4"/>
+                        <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill="#C4C4C4"/>
+                      </svg>
+                    </li>
+                    <li className={`${jarStyles.item} ${messageStyles.flower}`}>
+                      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="7" r="7" fill="#DB4545"/>
+                        <circle cx="23" cy="14" r="7" fill="#DB4545"/>
+                        <circle cx="20" cy="23" r="7" fill="#DB4545"/>
+                        <circle cx="10" cy="23" r="7" fill="#DB4545"/>
+                        <circle cx="7" cy="14" r="7" fill="#DB4545"/>
+                        <circle cx="15" cy="16" r="6" fill="#FA8888"/>
+                      </svg>
+                    </li>
+                  </ul>
+                <div className={`${writetoolsStyles.message}`}>
+                <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill="#E75187"/>
+                  <g filter="url(#msg_filter0_d)">
+                    <path d="M2 22H22V2L2 22Z" fill="#E75187"/>
+                  </g>
+                  <defs>
+                    <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                      <feOffset/>
+                      <feGaussianBlur stdDeviation="1"/>
+                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                  </defs>
+                </svg>
+                </div>
+                <div className={`${writetoolsStyles.pencil}`}>
+                  <svg width="30" height="155" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
+                    <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
+                    <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
+                    <path d="M6.10352e-05 1.00005L9.00006 0V130L6.10352e-05 129V1.00005Z" fill="#C3711E"/>
+                    <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
+                    <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
+                    <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
+                    <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill="#F4F4F4"/>
+                    <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill="white"/>
+                    <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill="#EBEBEB"/>
+                  </svg>
+                </div>
               </div>
             </div>
             <nav 

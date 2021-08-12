@@ -1,0 +1,98 @@
+/* .star {
+    margin: 5px 0;
+    position: relative;
+    display: block;
+    color: var(--color-2);
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid var(--color-2);
+    border-left: 10px solid transparent;
+    transform: rotate(35deg);
+    border-radius: 14px;
+}
+
+.star:before {
+    border-bottom: 8px solid var(--color-2);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -4.5px;
+    left: -6.5px;
+    display: block;
+    content: '';
+    transform: rotate(-35deg);
+    border-radius: 14px;
+}
+
+.star:after {
+    position: absolute;
+    display: block;
+    color: var(--color-2);
+    top: .3px;
+    left: -10.5px;
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid var(--color-2);
+    border-left: 10px solid transparent;
+    transform: rotate(-70deg);
+    content: '';
+    border-radius: 14px;
+}
+
+.ribbon {
+
+}
+
+.heart {
+    position: relative;
+    width: 20px;
+    height: 18px;
+}
+.heart:before,
+.heart:after {
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 0;
+    width: 10px;
+    height: 16px;
+    background: var(--color-1);
+    border-radius: 10px 10px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+.heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.candy {
+
+}
+
+.flower {
+    width: calc(120px / 6);
+    height: calc(40px / 6);
+    border-radius: calc(20px / 6);
+    background: var(--color-4);
+    margin-top: calc(50px / 6);
+}
+
+.flower::after, .flower::before {
+    content: '';
+    position: absolute;
+    background: var(--color-4);
+    border-radius: calc(20px / 6);
+    width: calc(120px / 6);
+    height: calc(40px / 6);
+    transform: rotate(60deg);
+}
+
+.flower::before {
+    transform: rotate(-60deg);
+} */

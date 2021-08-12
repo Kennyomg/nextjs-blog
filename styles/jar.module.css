@@ -27,16 +27,35 @@
     /* background: radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.3) 40%); */
     /* border-radius: var(--circle-radius); */
     display: block;
+    top: 0;
+    left: 0;
 }
 .rim g {
     backdrop-filter: blur(5px);
 }
 
+.itemList {
+    position:relative;
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--circle-radius);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    shape-outside: circle(50.0% at 50% 50%) padding-box;
+}
+
 .item {
-    height: 20px;
-    width: 20px;
-    position:absolute;
+    /* max-height: 35px;
+    max-width: 35px;
+    position:absolute;=
     background-color: var(--color-1);
     top: 21%;
     left: 19%;
+    margin: 12px; */
 }
