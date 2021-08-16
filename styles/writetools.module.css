@@ -35,18 +35,50 @@
 }
 
 .message textarea {
+    position: relative;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.textareaWrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    height: 100px;
-    appearance: none;
-    background-color: transparent;
-    border: none;
+    /* width: 80%;
+    height: 100px; */
 }
 
-
+.textareaWrapper:after {
+    content:"";
+    border-top: 20px solid black;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transform: rotate(-45deg);
+    z-index: 1;
+    opacity: 0.5;
+    position: absolute;
+    right: -18px;
+    bottom: -3px;
+    pointer-events: none;
+}
+.pullTab {
+    height: 0px;
+    width: 0px;
+    border-top: 20px solid cyan;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    bottom: 0px;
+    right: -15px;
+    pointer-events: none;
+    z-index: 2;
+}
 
 .message textarea:focus {
     /* background-color: white; */

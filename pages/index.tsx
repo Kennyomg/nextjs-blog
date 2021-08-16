@@ -19,6 +19,7 @@ import { useMorph } from 'react-morph'
 
 import { HexColorPicker } from 'react-colorful';
 import tinycolor from 'tinycolor2';
+import { write } from 'node:fs'
 
 // import JarIcon from '../public/images/jarIcon.svg';
 // import ProfileIcon from '../public/images/ProfileIcon.svg';
@@ -323,7 +324,10 @@ export default function Home() {
                       </filter>
                     </defs>
                   </svg>
-                  <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
+                  <div className={writetoolsStyles.textareaWrapper}>
+                    <div className={writetoolsStyles.pullTab} />
+                    <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
+                  </div>
                 </div>
                 <div className={`${writetoolsStyles.pencil}`}>
                   <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
