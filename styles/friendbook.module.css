@@ -1,14 +1,37 @@
 .friendbook {
-    width: 346px;
-    height: 242px;
+    width: 80%;
+    height: calc(80% / var(--phi-1));
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 2px -2px 1px rgba(0, 0, 0, 25%);
+}
+
+.friendbook::after {
+    background: linear-gradient(to right, transparent 0%,rgba(0,0,0,0.2) 46%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.5) 51%,rgba(0,0,0,0.2) 52%,transparent 100%);
+    bottom: 0;
+    content: '';
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%,0);
+    width: 4em;
+    z-index: 1;
+    max-height: 100%;
 }
 
 .leftpage {
+    height: 100%;
     width: 50%;
     float: left;
+    background-color: white;
 }
 
 .rightpage {
+    height: 100%;
     width: 50%;
     float: right;
+    background-color: white;
 }

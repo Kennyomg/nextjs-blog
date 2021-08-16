@@ -141,7 +141,11 @@ export default function Home() {
                ${activeNavIndex ? appCDStyles['cdIndex' + activeNavIndex] : appCDStyles.cdIndex1}`
             } 
             style={{transform: `translate(-50%, -50%) rotateZ(${navRotation}deg)`}}
-            onClick={(e) => { setShowNav(false);  }}
+            onClick={(e) => { 
+              if (showNav) setShowNav(false)
+              if (showPaperColorPicker) setShowPaperColorPicker(false)
+              if (showPencilColorPicker) setShowPencilColorPicker(false)
+            }}
             >
             <div className={appCDStyles.cdBg}>
               <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
@@ -309,7 +313,7 @@ export default function Home() {
                 <div className={`${writetoolsStyles.message}`}>
                   <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
-                    <g filter="url(#msg_filter0_d)">
+                    <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
                       <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
                     </g>
                     <defs>
