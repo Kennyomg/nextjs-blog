@@ -47,3 +47,23 @@ img {
     max-width: 100%;
     display: block;
 }
+
+.react-colorful {
+    position:absolute !important;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.large {
+    font-size: 3rem;
+}
+
+.medium {
+    font-size: 2rem;
+}
+
+.small {
+    font-size: 1rem;
+}

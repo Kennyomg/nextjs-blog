@@ -17,6 +17,9 @@ import messageStyles from '../styles/message.module.css'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
 
+import { HexColorPicker } from 'react-colorful';
+import tinycolor from 'tinycolor2';
+
 // import JarIcon from '../public/images/jarIcon.svg';
 // import ProfileIcon from '../public/images/ProfileIcon.svg';
 // import BookIcon from '../public/images/BookIcon.svg';
@@ -99,8 +102,22 @@ export default function Home() {
   const [ showRegisterForm, setShowRegisterForm ] = useState(false)
   const [ showLoginForm, setShowLoginForm ] = useState(false)
   const [ showLetter, setShowLetter ] = useState(false)
+  const [ pencilColor, setPencilColor ] = useState("#2ae6dc")
+  const [ paperColor, setPaperColor ] = useState("#1b2f85")
+  const [ showPencilColorPicker, setShowPencilColorPicker ] = useState(false)
+  const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
+  const [ messageText, setMessageText ] = useState("")
   // const buttonMorph = useMorph()
   // const screenMorph = useMorph()
+
+  // Decide font-size class for message
+  let messageSizeClass = 'small'
+  if (messageText.split(/\r\n|\r|\n/).length < 3) {
+    messageSizeClass = 'large'
+  } else if (messageText.split(/\r\n|\r|\n/).length < 5) {
+    messageSizeClass = 'medium'
+  }
+
 
   return (
     <Layout>
@@ -112,6 +129,8 @@ export default function Home() {
         <div className={`${utilStyles.quoteIcon} ${utilStyles.button} ${utilStyles.round} ${utilStyles.fillWidth}`}></div>
         <div className={`${utilStyles.button} ${utilStyles.round}`}></div>
       </div>
+      { showPencilColorPicker && ( <HexColorPicker color={pencilColor} onChange={setPencilColor}/> ) }
+      { showPaperColorPicker && ( <HexColorPicker color={paperColor} onChange={setPaperColor}/> ) }
       {
         loggedIn ? (
           <div
@@ -127,7 +146,7 @@ export default function Home() {
               <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
                 <div className={jarStyles.jar}>
                   <div className={jarStyles.bottom}>
-                    <svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="auto" height="auto" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g filter="url(#filter0_biiii)">
                         <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
                       </g>
@@ -201,7 +220,7 @@ export default function Home() {
                     </li>
                   </ul>
                   <div className={jarStyles.rim}>
-                    <svg width="227" height="227" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g filter="url(#filter1_biiii)">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
                       </g>
@@ -287,26 +306,27 @@ export default function Home() {
                     </li>
                   </ul>
                 <div className={`${writetoolsStyles.message}`}>
-                <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill="#E75187"/>
-                  <g filter="url(#msg_filter0_d)">
-                    <path d="M2 22H22V2L2 22Z" fill="#E75187"/>
-                  </g>
-                  <defs>
-                    <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                      <feOffset/>
-                      <feGaussianBlur stdDeviation="1"/>
-                      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-                    </filter>
-                  </defs>
-                </svg>
+                  <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
+                    <g filter="url(#msg_filter0_d)">
+                      <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
+                    </g>
+                    <defs>
+                      <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset/>
+                        <feGaussianBlur stdDeviation="1"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                      </filter>
+                    </defs>
+                  </svg>
+                  <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
                 </div>
                 <div className={`${writetoolsStyles.pencil}`}>
-                  <svg width="30" height="155" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
                     <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
                     <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
@@ -314,9 +334,9 @@ export default function Home() {
                     <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
                     <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
                     <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
-                    <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill="#F4F4F4"/>
-                    <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill="white"/>
-                    <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill="#EBEBEB"/>
+                    <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill={pencilColor}/>
+                    <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill={tinycolor(pencilColor).lighten(10).toString()}/>
+                    <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill={tinycolor(pencilColor).darken(10).toString()}/>
                   </svg>
                 </div>
               </div>

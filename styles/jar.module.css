@@ -1,7 +1,9 @@
 .jar {
     position:absolute;
-    width: 227px;
-    height: 227px;
+    width: 300px;
+    height: 300px;
+    max-width: 90vw;
+    max-height: 90vw;
     /* border-radius: var(--circle-radius); */
     /* background-color: rgba(255, 255, 255, 0.2); */
     top: 50%;
@@ -13,6 +15,8 @@
     position:absolute;
     width: 74px;
     height: 74px;
+    max-width: 30vw;
+    max-height: 30vw;
     /* background-color: rgba(255, 255, 255, 0.5); */
     /* border-radius: var(--circle-radius); */
     top: 50%;
@@ -22,8 +26,10 @@
 
 .rim {
     position:absolute;
-    width: 227px;
-    height: 227px;
+    width: 300px;
+    height: 300px;
+    max-width: 90vw;
+    max-height: 90vw;
     /* background: radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.3) 40%); */
     /* border-radius: var(--circle-radius); */
     display: block;
