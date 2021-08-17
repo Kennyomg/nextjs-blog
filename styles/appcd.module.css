@@ -140,7 +140,7 @@
     /* background-color:var(--color-3); */
     top: 80%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .section4 {

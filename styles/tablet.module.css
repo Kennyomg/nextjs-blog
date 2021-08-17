@@ -1,7 +1,8 @@
 .tablet {
     position: absolute;
-    width: 80%;
-    height: calc(80% / var(--phi-1));
+    min-width: 75%;
+    max-width: 100vw;
+    height: calc(75% * var(--phi-1));
     left: 50%;
     top: 50%;
     background: #8B8B8B;
@@ -27,10 +28,10 @@
 
 .tablet::after {
     position: absolute;
-    width: calc((100% / 1.12) - 20px);
-    height: calc(100% / 1.12);
-    left: calc(50% + 10px);
-    top: 50%;
+    width: calc(100% / 1.12);
+    height: calc((100% / 1.12) - 20px);
+    top: calc(50% - 10px);
+    left: 50%;
     transform: translate(-50%, -50%);
     content: "";
     background: #FFFFFF;
@@ -43,8 +44,8 @@
     position: absolute;
     transform: translate(-50%, -50%);
     z-index: 4;
-    top: 50%;
-    left: 24px;
+    bottom: -4px;
+    left: 50%;
     height: 30px;
     width: 30px;
 }

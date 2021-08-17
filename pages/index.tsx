@@ -1,9 +1,18 @@
+// Import functions
 import { ReactSVGElement, useState } from 'react'
+import { isLocalURL } from 'next/dist/next-server/lib/router/router'
+import { useMorph } from 'react-morph'
+import tinycolor from 'tinycolor2'
+
+// Components
 import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
+// import Link from 'next/link'
+// import Image from 'next/image'
 import Layout, { siteTitle } from '../components/layout'
-import Date from '../components/date'
+// import Date from '../components/date'
+import { HexColorPicker } from 'react-colorful'
+
+// Styles
 import utilStyles from '../styles/utils.module.css'
 import appCDStyles from '../styles/appcd.module.css'
 import headerStyles from '../styles/header.module.css'
@@ -14,17 +23,15 @@ import tabletStyles from '../styles/tablet.module.css'
 import friendbookStyles from '../styles/friendbook.module.css'
 import writetoolsStyles from '../styles/writetools.module.css'
 import messageStyles from '../styles/message.module.css'
-import { isLocalURL } from 'next/dist/next-server/lib/router/router'
-import { useMorph } from 'react-morph'
+import profileStyles from '../styles/profile.module.css'
 
-import { HexColorPicker } from 'react-colorful';
-import tinycolor from 'tinycolor2';
-import { write } from 'node:fs'
-
+// Images
 // import JarIcon from '../public/images/jarIcon.svg';
 // import ProfileIcon from '../public/images/ProfileIcon.svg';
 // import BookIcon from '../public/images/BookIcon.svg';
 // import WriteMessageIcon from '../public/images/WriteMessageIcon.svg';
+
+
 
 const navItems = [
   // <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.0614 3.19685C24.0614 1.43128 22.6301 0 20.8645 0H5.13545C3.36988 0 1.9386 1.43128 1.9386 3.19685V5.92763C1.9386 6.18503 2.14726 6.3937 2.40467 6.3937C2.807 6.3937 3.02702 6.87539 2.7835 7.19565C1.04017 9.48833 0 12.3821 0 15.5276C0 22.9682 5.8203 29 13 29C20.1797 29 26 22.9682 26 15.5276C26 12.3821 24.9598 9.48833 23.2165 7.19565C22.973 6.87539 23.193 6.3937 23.5953 6.3937C23.8527 6.3937 24.0614 6.18503 24.0614 5.92763V3.19685Z"/></svg>,
@@ -119,7 +126,6 @@ export default function Home() {
     messageSizeClass = 'medium'
   }
 
-
   return (
     <Layout>
       <Head>
@@ -193,7 +199,7 @@ export default function Home() {
                       </defs>
                     </svg>
                   </div>
-                  {/* <ul className={jarStyles.itemList}>
+                  <ul className={jarStyles.itemList}>
                     <li className={`${jarStyles.item} ${messageStyles.star}`}>
                       <svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
@@ -223,7 +229,7 @@ export default function Home() {
                         <circle cx="15" cy="16" r="6" fill="#FA8888"/>
                       </svg>
                     </li>
-                  </ul> */}
+                  </ul>
                   <div className={jarStyles.rim}>
                     <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g filter="url(#filter1_biiii)">
@@ -272,15 +278,86 @@ export default function Home() {
               <div className={`${appCDStyles.section} ${appCDStyles.section2}`}>
                 <div className={`${tabletStyles.tablet}`}>
                   <div className={`${tabletStyles.homeButton} ${utilStyles.button} ${utilStyles.round}`} />
+                  <div className={profileStyles.userLayout}>
+                    <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
+                    <div className={profileStyles.name}>
+                      <input type="text" value="Kenrick Halff" />
+                    </div>
+                    <div className={profileStyles.info}>
+                      <ul>
+                        <li>
+                          <label htmlFor="birthday">Birthday</label>
+                          <input type="date" name="birthday" id="birthday" />
+                        </li>
+                        <li>
+                          <label htmlFor="favoriteSnack">Favorite snack</label>
+                          <input type="text" name="favoriteSnack" id="favoriteSnack" />
+                        </li>
+                        <li>
+                          <label htmlFor="catchphrase">Catchphrase</label>
+                          <input type="text" name="catchphrase" id="catchphrase" />
+                        </li>                    
+                      </ul>
+                    </div>
+                    <div className={profileStyles.settings}>
+                      <ul>
+                        <li>
+                          <input type="checkbox" name="consentMail" id="consentMail" defaultValue="checked" />
+                          <label htmlFor="consentMail">Get the newsletter</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" name="consentData" id="consentData" defaultValue="checked" />
+                          <label htmlFor="consentData">Share analytical data</label>
+                        </li>
+                        <li>
+                          <input type="checkbox" name="consentCookies" id="consentCookies" defaultValue="checked" />
+                          <label htmlFor="consentCookies">Accept cookies</label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className={profileStyles.stickers}></div>
+                  </div>
                 </div>
               </div>
               <div className={`${appCDStyles.section} ${appCDStyles.section3}`}>
                 <div className={`${friendbookStyles.friendbook}`}>
                   <div className={`${friendbookStyles.leftpage}`}>
-
+                    <div className={profileStyles.friendLayout}>
+                      <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
+                      <div className={profileStyles.name}>Kenrick Halff</div>
+                      <div className={profileStyles.info}>
+                        <ul>
+                          <li>
+                            Birthday: November 5th 1993
+                          </li>
+                          <li>
+                            Favorite snack: Frikandel
+                          </li>
+                          <li>
+                            Catchphrase: That's life
+                          </li>                    
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                   <div className={`${friendbookStyles.rightpage}`}>
-
+                    <div className={profileStyles.friendLayout}>
+                      <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
+                      <div className={profileStyles.name}>Kenrick Halff</div>
+                      <div className={profileStyles.info}>
+                        <ul>
+                          <li>
+                            Birthday: November 5th 1993
+                          </li>
+                          <li>
+                            Favorite snack: Frikandel
+                          </li>
+                          <li>
+                            Catchphrase: That's life
+                          </li>                    
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
