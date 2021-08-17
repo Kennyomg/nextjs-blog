@@ -193,7 +193,7 @@ export default function Home() {
                       </defs>
                     </svg>
                   </div>
-                  <ul className={jarStyles.itemList}>
+                  {/* <ul className={jarStyles.itemList}>
                     <li className={`${jarStyles.item} ${messageStyles.star}`}>
                       <svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
@@ -223,7 +223,7 @@ export default function Home() {
                         <circle cx="15" cy="16" r="6" fill="#FA8888"/>
                       </svg>
                     </li>
-                  </ul>
+                  </ul> */}
                   <div className={jarStyles.rim}>
                     <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g filter="url(#filter1_biiii)">
