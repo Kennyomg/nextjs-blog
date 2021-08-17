@@ -286,17 +286,17 @@ export default function Home() {
               </div>
               <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
                 <ul className={`${writetoolsStyles.shapes}`}>
-                    <li className={`${jarStyles.item} ${messageStyles.star}`}>
+                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
                       <svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
                       </svg>
                     </li>
-                    <li className={`${jarStyles.item} ${messageStyles.heart}`}>
+                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
                       <svg width="auto" height="auto" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill="#C4C4C4"/>
                       </svg>
                     </li>
-                    <li className={`${jarStyles.item} ${messageStyles.candy}`}>
+                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
                       <svg width="auto" height="auto" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="28.0441" cy="17.0442" r="10.3423" fill="#C4C4C4"/>
                         <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill="#C4C4C4"/>
@@ -305,7 +305,7 @@ export default function Home() {
                         <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill="#C4C4C4"/>
                       </svg>
                     </li>
-                    <li className={`${jarStyles.item} ${messageStyles.flower}`}>
+                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
                       <svg width="auto" height="auto" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="15" cy="7" r="7" fill="#DB4545"/>
                         <circle cx="23" cy="14" r="7" fill="#DB4545"/>

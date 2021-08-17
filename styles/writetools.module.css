@@ -27,6 +27,10 @@
     height: 100%;
 }
 
+.shape {
+    margin: 8px;
+}
+
 .message {
     position: relative;
     float: left;
@@ -60,12 +64,13 @@
     height: 100px; */
 }
 
-.textareaWrapper:after {
+.textareaWrapper::after {
     content:"";
     border-top: 20px solid black;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
     z-index: 3;
     opacity: 0.5;
     position: absolute;
@@ -80,6 +85,7 @@
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
     position: absolute;
     bottom: 0px;
     right: -15px;
