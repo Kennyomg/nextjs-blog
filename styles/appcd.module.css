@@ -118,6 +118,8 @@
     position: absolute;
     width: 30%;
     height: 30%;
+    max-width: 100vw;
+    max-height: 80vh;
 }
 
 .section1 {
@@ -128,14 +130,14 @@
 }
 
 .section2 {
-    background-color: var(--color-2);
+    /* background-color: var(--color-2); */
     top: 50%;
     left: 80%;
     transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .section3 {
-    background-color:var(--color-3);
+    /* background-color:var(--color-3); */
     top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);

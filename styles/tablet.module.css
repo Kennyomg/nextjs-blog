@@ -1,0 +1,50 @@
+.tablet {
+    position: absolute;
+    width: 80%;
+    height: calc(80% / var(--phi-1));
+    left: 50%;
+    top: 50%;
+    background: #8B8B8B;
+    border-radius: 15px;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+
+.tablet::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.143);
+    box-shadow: inset 3.92px -3.92px 3.92px rgba(0, 0, 0, 0.486), inset -3.92px 3.92px 3.92px rgba(255, 255, 255, 0.486);
+    backdrop-filter: blur(50.176px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 15px;
+    z-index: 2;
+}
+
+.tablet::after {
+    position: absolute;
+    width: calc((100% / 1.12) - 20px);
+    height: calc(100% / 1.12);
+    left: calc(50% + 10px);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: "";
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+.homeButton {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    top: 50%;
+    left: 24px;
+    height: 30px;
+    width: 30px;
+}
