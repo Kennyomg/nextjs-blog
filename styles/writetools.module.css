@@ -1,7 +1,3 @@
-.layout {
-
-}
-
 .pencil {
     position: relative;
     float: right;
@@ -29,6 +25,7 @@
 
 .shape {
     margin: 8px;
+    cursor: pointer;
 }
 
 .message {
@@ -37,6 +34,12 @@
     max-width: calc(100% - 100px);
     height: 100%;
     padding: 0 12px;
+}
+
+.folded {
+    /* position: absolute; */
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .dogEar {
@@ -93,7 +96,3 @@
     z-index: 4;
 }
 
-.message textarea:focus {
-    /* background-color: white; */
-
-}

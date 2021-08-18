@@ -2,6 +2,7 @@
 import { ReactSVGElement, useState } from 'react'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
+import { useDrag, useDrop } from 'react-dnd'
 import tinycolor from 'tinycolor2'
 
 // Components
@@ -25,6 +26,10 @@ import writetoolsStyles from '../styles/writetools.module.css'
 import messageStyles from '../styles/message.module.css'
 import profileStyles from '../styles/profile.module.css'
 
+// Constants
+import { MessageForm } from '../constants/message'
+import { DragItemTypes } from '../constants/dragItemTypes'
+
 // Images
 // import JarIcon from '../public/images/jarIcon.svg';
 // import ProfileIcon from '../public/images/ProfileIcon.svg';
@@ -46,6 +51,30 @@ const navItems = [
   (<svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#pi_clip0)"><path d="M14.3138 26.5399H2.68606C2.68606 26.5399 0.773584 10.9832 8.49991 10.9832C16.2262 10.9832 14.3138 26.5399 14.3138 26.5399V26.5399Z" fill="white"/><path d="M14.3137 27.0001H2.68628C2.44842 27.0001 2.24775 26.8261 2.21928 26.5945C2.16785 26.1741 0.995046 16.2484 4.64937 12.2136C5.66558 11.0913 6.96099 10.5225 8.49977 10.5225C10.0386 10.5225 11.3344 11.0913 12.3506 12.2136C16.005 16.2484 14.8322 26.1741 14.7807 26.5945C14.7523 26.8261 14.5516 27.0001 14.3137 27.0001ZM3.11105 26.0792H13.889C14.068 24.1785 14.6283 16.1157 11.6467 12.8242C10.805 11.8948 9.77543 11.4434 8.49977 11.4434C7.22411 11.4434 6.19504 11.8948 5.35332 12.8238C2.37173 16.1153 2.93196 24.1785 3.11105 26.0792V26.0792Z" fill="white"/><path d="M8.49991 9.24984C10.9786 9.24984 12.988 7.28222 12.988 4.85503C12.988 2.42783 10.9786 0.460205 8.49991 0.460205C6.02119 0.460205 4.0118 2.42783 4.0118 4.85503C4.0118 7.28222 6.02119 9.24984 8.49991 9.24984Z" fill="white"/><path d="M8.49977 9.71031C5.76615 9.71031 3.54178 7.53218 3.54178 4.85493C3.54178 2.17813 5.76615 0 8.49977 0C11.2339 0 13.4582 2.17813 13.4582 4.85493C13.4582 7.53218 11.2339 9.71031 8.49977 9.71031ZM8.49977 0.920894C6.28459 0.920894 4.48222 2.68579 4.48222 4.85493C4.48222 7.02452 6.28459 8.78941 8.49977 8.78941C10.7154 8.78941 12.5178 7.02452 12.5178 4.85493C12.5178 2.68579 10.7154 0.920894 8.49977 0.920894V0.920894Z" fill="white"/></g><defs><clipPath id="pi_clip0"><rect width="13" height="27" fill="white" transform="translate(2)"/></clipPath></defs></svg>),
   (<svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg"><g><rect x="5" y="3" width="16" height="22" fill="#F2F2F2"/><rect x="21" y="3" width="16" height="22" fill="#F2F2F2"/></g></svg>),
   (<svg width="50" height="29" viewBox="0 0 50 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M14 4H46V27H2V16L14 4Z" fill="white"/></g><g><path d="M2 16H14V4L2 16Z" fill="white"/></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M47.6357 4.54386L45.0393 1.9474L45.0392 1.94737L42.9688 0.123333L42.9687 0.123171L27.2025 15.8894L27.2041 16.1374L27.1875 16.1207L27.2177 19.3513L27.2091 19.3448L27.2091 19.3508L27.2056 19.3482L27.2455 22.331L27.2456 22.3353L27.2456 22.3375L27.2476 22.3375L30.2349 22.3775L30.2259 22.3654L33.4624 22.3956L33.4457 22.379L33.6937 22.3806L33.6937 22.3806L49.4599 6.61442L47.6357 4.54388L47.5126 4.66705L47.5126 4.66704L47.6357 4.54386ZM31.6232 20.5564L31.7464 20.4333L31.7463 20.4332L31.6232 20.5564L31.6232 20.5564Z" fill="white"/></g></svg>)
+]
+
+const jarItems = [
+  (color = "#E75187") => (<svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill={color}/>
+  </svg>),
+  (color = "#C4C4C4") => (<svg width="auto" height="auto" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill={color}/>
+</svg>),
+  (color = "#C4C4C4") => (<svg width="auto" height="auto" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="28.0441" cy="17.0442" r="10.3423" fill={color}/>
+  <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill={color}/>
+  <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill={color}/>
+  <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill={color}/>
+  <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill={color}/>
+</svg>),
+  (color = "#DB4545", accentColor = tinycolor("#DB4545").lighten(20).toString()) => (<svg width="auto" height="auto" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="15" cy="7" r="7" fill={color}/>
+  <circle cx="23" cy="14" r="7" fill={color}/>
+  <circle cx="20" cy="23" r="7" fill={color}/>
+  <circle cx="10" cy="23" r="7" fill={color}/>
+  <circle cx="7" cy="14" r="7" fill={color}/>
+  <circle cx="15" cy="16" r="6" fill={accentColor}/>
+</svg>)
 ]
 
 
@@ -103,9 +132,9 @@ function calculateNavRotation(currNavIndex, prevNavIndex, setNavRotation) {
 }
 
 export default function Home() {
-  const [showNav, setShowNav] = useState(false)
-  const [activeNavIndex, setActiveNavIndex] = useState(0)
-  const [navRotation, setNavRotation] = useState(0)
+  const [ showNav, setShowNav ] = useState(false)
+  const [ activeNavIndex, setActiveNavIndex ] = useState(0)
+  const [ navRotation, setNavRotation ] = useState(0)
   const [ loggedIn, setLoggedIn ] = useState(false)
   const [ showRegisterForm, setShowRegisterForm ] = useState(false)
   const [ showLoginForm, setShowLoginForm ] = useState(false)
@@ -115,6 +144,19 @@ export default function Home() {
   const [ showPencilColorPicker, setShowPencilColorPicker ] = useState(false)
   const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
   const [ messageText, setMessageText ] = useState("")
+  const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
+  
+  const [ { isDragging }, drag ] = useDrag(() => ({
+    type: DragItemTypes.MESSAGE,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
+
+  // const [ { isOver }, drop ] = useDrop(() => ({
+  //   type: DragItemTypes.MESSAGE,
+  //   drop: () => ,
+  // }))
   // const buttonMorph = useMorph()
   // const screenMorph = useMorph()
 
@@ -201,33 +243,16 @@ export default function Home() {
                   </div>
                   <ul className={jarStyles.itemList}>
                     <li className={`${jarStyles.item} ${messageStyles.star}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
-                      </svg>
+                      {jarItems[0]()}
                     </li>
                     <li className={`${jarStyles.item} ${messageStyles.heart}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill="#C4C4C4"/>
-                      </svg>
+                      {jarItems[1]()}                      
                     </li>
                     <li className={`${jarStyles.item} ${messageStyles.candy}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="28.0441" cy="17.0442" r="10.3423" fill="#C4C4C4"/>
-                        <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill="#C4C4C4"/>
-                        <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill="#C4C4C4"/>
-                        <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill="#C4C4C4"/>
-                        <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill="#C4C4C4"/>
-                      </svg>
+                      {jarItems[2]()}                      
                     </li>
                     <li className={`${jarStyles.item} ${messageStyles.flower}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="15" cy="7" r="7" fill="#DB4545"/>
-                        <circle cx="23" cy="14" r="7" fill="#DB4545"/>
-                        <circle cx="20" cy="23" r="7" fill="#DB4545"/>
-                        <circle cx="10" cy="23" r="7" fill="#DB4545"/>
-                        <circle cx="7" cy="14" r="7" fill="#DB4545"/>
-                        <circle cx="15" cy="16" r="6" fill="#FA8888"/>
-                      </svg>
+                      {jarItems[3]()}
                     </li>
                   </ul>
                   <div className={jarStyles.rim}>
@@ -363,58 +388,63 @@ export default function Home() {
               </div>
               <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
                 <ul className={`${writetoolsStyles.shapes}`}>
-                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill="#E75187"/>
-                      </svg>
+                    <li onClick={() => setMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
+                      {jarItems[0](paperColor)}
                     </li>
-                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill="#C4C4C4"/>
-                      </svg>
+                    <li onClick={() => setMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
+                      {jarItems[1](paperColor)}
                     </li>
-                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="28.0441" cy="17.0442" r="10.3423" fill="#C4C4C4"/>
-                        <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill="#C4C4C4"/>
-                        <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill="#C4C4C4"/>
-                        <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill="#C4C4C4"/>
-                        <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill="#C4C4C4"/>
-                      </svg>
+                    <li onClick={() => setMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
+                      {jarItems[2](paperColor)}
                     </li>
-                    <li className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
-                      <svg width="auto" height="auto" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="15" cy="7" r="7" fill="#DB4545"/>
-                        <circle cx="23" cy="14" r="7" fill="#DB4545"/>
-                        <circle cx="20" cy="23" r="7" fill="#DB4545"/>
-                        <circle cx="10" cy="23" r="7" fill="#DB4545"/>
-                        <circle cx="7" cy="14" r="7" fill="#DB4545"/>
-                        <circle cx="15" cy="16" r="6" fill="#FA8888"/>
-                      </svg>
+                    <li onClick={() => setMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
+                      {jarItems[3](paperColor, pencilColor)}
                     </li>
                   </ul>
-                <div className={`${writetoolsStyles.message}`}>
-                  <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
-                    <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
-                      <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
-                    </g>
-                    <defs>
-                      <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                        <feOffset/>
-                        <feGaussianBlur stdDeviation="1"/>
-                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-                      </filter>
-                    </defs>
-                  </svg>
-                  <div className={writetoolsStyles.textareaWrapper}>
-                    <div className={writetoolsStyles.pullTab} />
-                    <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
-                  </div>
+                  {/*onClick={() => setMessageForm(MessageForm.UNFOLDED)}*/} 
+                <div className={`${writetoolsStyles.message} ${messageForm !== MessageForm.UNFOLDED && writetoolsStyles.folded}`}>
+                  {(() => {
+                    switch(messageForm) {
+                      case MessageForm.UNFOLDED:
+                        return (<>
+                          <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
+                            <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
+                              <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
+                            </g>
+                            <defs>
+                              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                <feOffset/>
+                                <feGaussianBlur stdDeviation="1"/>
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                              </filter>
+                            </defs>
+                          </svg>
+                          <div className={writetoolsStyles.textareaWrapper}>
+                            <div className={writetoolsStyles.pullTab} />
+                            <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
+                          </div>
+                        </>)
+                        break;
+                      case MessageForm.STAR:
+                        return (<div ref={drag}>{jarItems[0](paperColor)}</div>);
+                        break;
+                      case MessageForm.HEART:
+                        return (<div ref={drag}>{jarItems[1](paperColor)}</div>);
+                        break;
+                      case MessageForm.CANDY:
+                        return (<div ref={drag}>{jarItems[2](paperColor)}</div>);
+                        break;
+                      case MessageForm.FLOWER:
+                        return (<div ref={drag}>{jarItems[3](paperColor, pencilColor)}</div>);
+                        break;
+                    }
+                  
+                  })()}
                 </div>
                 <div className={`${writetoolsStyles.pencil}`}>
                   <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
