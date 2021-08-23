@@ -13,6 +13,10 @@
     --color-2: palegoldenrod;
     --color-3: palegreen;
     --color-4: paleturquoise;
+
+    --box-shadow-header: 0px 3px 4px 0 rgba(0, 0, 0, 25%);
+    --filter-drop-shadow: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
+    --filter-drop-shadow-high: drop-shadow(-8px 8px 1px rgba(0, 0, 0, 25%));
 }
 
 html,

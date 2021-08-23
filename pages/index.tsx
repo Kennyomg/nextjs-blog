@@ -2,7 +2,7 @@
 import { ReactSVGElement, useState } from 'react'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
-import { useDrag, useDrop } from 'react-dnd'
+// import { useDrag, useDrop } from 'react-dnd'
 import tinycolor from 'tinycolor2'
 
 // Components
@@ -28,13 +28,13 @@ import profileStyles from '../styles/profile.module.css'
 
 // Constants
 import { MessageForm } from '../constants/message'
-import { DragItemTypes } from '../constants/dragItemTypes'
+// import { DragItemTypes } from '../constants/dragItemTypes'
 
 // Images
-// import JarIcon from '../public/images/jarIcon.svg';
-// import ProfileIcon from '../public/images/ProfileIcon.svg';
-// import BookIcon from '../public/images/BookIcon.svg';
-// import WriteMessageIcon from '../public/images/WriteMessageIcon.svg';
+// import JarIcon from '../public/images/jarIcon.svg'
+// import ProfileIcon from '../public/images/ProfileIcon.svg'
+// import BookIcon from '../public/images/BookIcon.svg'
+// import WriteMessageIcon from '../public/images/WriteMessageIcon.svg'
 
 
 
@@ -91,13 +91,13 @@ function getAngleFromEvent(e: any, setRotation: any) {
 }
 
 function stopEventProp(e: any) {
-  e.preventDefault();
-  e.stopPropagation();
-  e.cancelBubble = true;
+  e.preventDefault()
+  e.stopPropagation()
+  e.cancelBubble = true
 }
 
 function calculateNavRotation(currNavIndex, prevNavIndex, setNavRotation) {
-  const indexDistance = currNavIndex - prevNavIndex;
+  const indexDistance = currNavIndex - prevNavIndex
   const rndInt = Math.floor(Math.random() * 2)
 
   let rotationChange = 0
@@ -126,10 +126,59 @@ function calculateNavRotation(currNavIndex, prevNavIndex, setNavRotation) {
       break;
   }
 
-  setNavRotation(prevRotation => prevRotation + rotationChange);
+  setNavRotation(prevRotation => prevRotation + rotationChange)
 
-  return currNavIndex;
+  return currNavIndex
 }
+
+function resetRotationToCurrIndex(currNavIndex, setNavRotation) {
+  switch (currNavIndex) {
+    case 0:
+      setNavRotation(0)
+      break;
+    case 1:
+      setNavRotation(-90)
+      break;
+    case 2:
+      setNavRotation(-180)
+      break;
+    case 3:
+      setNavRotation(90)
+      break;
+  }
+}
+
+function allowDrop(e: any) {
+  stopEventProp(e)
+}
+
+function drag(e: any) {
+  // console.log(e.target)
+  // e.target.style.visibility = 'hidden'
+}
+
+function dragging(e: any, setNavRotation) {
+  // e.target.style.top = e.clientY
+  const clientX = e.clientX | parseInt(e.changedTouches && e.changedTouches[0].clientX, 10)
+  e.currentTarget.style.left = clientX
+
+  console.log({target: e.currentTarget, clientX})
+
+  if (clientX < document.body.clientWidth / 2) {
+    console.log("Rotating Left")
+    setNavRotation(prevRotation => prevRotation + 0.1)
+  }
+  if (clientX > document.body.clientWidth / 2) {
+    console.log("Rotating Right")
+    setNavRotation(prevRotation => prevRotation - 0.1)
+  }
+}
+
+function drop(e: any, currNavIndex, setNavRotation) {
+  stopEventProp(e)
+  resetRotationToCurrIndex(currNavIndex, setNavRotation)
+}
+
 
 export default function Home() {
   const [ showNav, setShowNav ] = useState(false)
@@ -145,20 +194,54 @@ export default function Home() {
   const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
   const [ messageText, setMessageText ] = useState("")
   const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
-  
-  const [ { isDragging }, drag ] = useDrag(() => ({
-    type: DragItemTypes.MESSAGE,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging()
-    })
-  }))
 
-  // const [ { isOver }, drop ] = useDrop(() => ({
-  //   type: DragItemTypes.MESSAGE,
-  //   drop: () => ,
-  // }))
-  // const buttonMorph = useMorph()
-  // const screenMorph = useMorph()
+  const [ isDragging, setIsDragging ] = useState(false)
+  
+  
+
+  const renderMessage = () => {
+    switch(messageForm) {
+      case MessageForm.UNFOLDED:
+        return (<>
+          <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
+            <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
+              <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
+            </g>
+            <defs>
+              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="1"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+              </filter>
+            </defs>
+          </svg>
+          <div className={writetoolsStyles.textareaWrapper}>
+            <div className={writetoolsStyles.pullTab} />
+            <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
+          </div>
+        </>)
+        break;
+      case MessageForm.STAR:
+        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[0](paperColor)}</div>);
+        break;
+      case MessageForm.HEART:
+        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[1](paperColor)}</div>);
+        break;
+      case MessageForm.CANDY:
+        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[2](paperColor)}</div>);
+        break;
+      case MessageForm.FLOWER:
+        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[3](paperColor, pencilColor)}</div>);
+        break;
+    }
+  }
+  
+  
 
   // Decide font-size class for message
   let messageSizeClass = 'small'
@@ -182,310 +265,274 @@ export default function Home() {
       { showPaperColorPicker && ( <HexColorPicker color={paperColor} onChange={setPaperColor}/> ) }
       {
         loggedIn ? (
-          <div
-            className={
-              `${appCDStyles.cd} 
-               ${showNav && appCDStyles.cdActive}
-               ${activeNavIndex ? appCDStyles['cdIndex' + activeNavIndex] : appCDStyles.cdIndex1}`
-            } 
-            style={{transform: `translate(-50%, -50%) rotateZ(${navRotation}deg)`}}
-            onClick={(e) => { 
-              if (showNav) setShowNav(false)
-              if (showPaperColorPicker) setShowPaperColorPicker(false)
-              if (showPencilColorPicker) setShowPencilColorPicker(false)
-            }}
-            >
-            <div className={appCDStyles.cdBg}>
-              <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
-                <div className={jarStyles.jar}>
-                  <div className={jarStyles.bottom}>
-                    <svg width="auto" height="auto" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g filter="url(#filter0_biiii)">
-                        <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
-                      </g>
-                      <defs>
-                        <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                          <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
-                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
-                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+          <>
+            {messageForm !== MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea} ${writetoolsStyles.folded}`}>
+                  {renderMessage()}
+            </div>}
+            <div
+              className={
+                `${appCDStyles.cd} 
+                ${showNav && appCDStyles.cdActive}
+                ${activeNavIndex ? appCDStyles['cdIndex' + activeNavIndex] : appCDStyles.cdIndex1}`
+              } 
+              style={{transform: `translate(-50%, -50%) rotateZ(${navRotation}deg)`}}
+              onClick={(e) => { 
+                if (showNav) setShowNav(false)
+                if (showPaperColorPicker) setShowPaperColorPicker(false)
+                if (showPencilColorPicker) setShowPencilColorPicker(false)
+              }}
+              onMouseUp={(e) => isDragging && setIsDragging(false)} onTouchEnd={(e) => isDragging && setIsDragging(false)}>
+              <div className={appCDStyles.cdBg}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
+                  <div className={jarStyles.jar} onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop}>
+                    <div className={jarStyles.bottom}>
+                      <svg width="auto" height="auto" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g filter="url(#filter0_biiii)">
+                          <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
+                        </g>
+                        <defs>
+                          <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+                            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
 
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="-4.32" dy="4.32"/>
-                          <feGaussianBlur stdDeviation="2.16"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="-4.32" dy="4.32"/>
+                            <feGaussianBlur stdDeviation="2.16"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
 
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="-2.16" dy="2.16"/>
-                          <feGaussianBlur stdDeviation="1.08"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="-2.16" dy="2.16"/>
+                            <feGaussianBlur stdDeviation="1.08"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
 
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="4.32" dy="-4.32"/>
-                          <feGaussianBlur stdDeviation="2.16"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="4.32" dy="-4.32"/>
+                            <feGaussianBlur stdDeviation="2.16"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
 
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="2.16" dy="-2.16"/>
-                          <feGaussianBlur stdDeviation="1.08"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
-                        </filter>
-                      </defs>
-                    </svg>
-                  </div>
-                  <ul className={jarStyles.itemList}>
-                    <li className={`${jarStyles.item} ${messageStyles.star}`}>
-                      {jarItems[0]()}
-                    </li>
-                    <li className={`${jarStyles.item} ${messageStyles.heart}`}>
-                      {jarItems[1]()}                      
-                    </li>
-                    <li className={`${jarStyles.item} ${messageStyles.candy}`}>
-                      {jarItems[2]()}                      
-                    </li>
-                    <li className={`${jarStyles.item} ${messageStyles.flower}`}>
-                      {jarItems[3]()}
-                    </li>
-                  </ul>
-                  <div className={jarStyles.rim}>
-                    <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g filter="url(#filter1_biiii)">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
-                      </g>
-                      <defs>
-                        <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                          <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
-                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
-                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
-
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="-4.32" dy="4.32"/>
-                          <feGaussianBlur stdDeviation="2.16"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
-
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="-2.16" dy="2.16"/>
-                          <feGaussianBlur stdDeviation="1.08"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
-
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="4.32" dy="-4.32"/>
-                          <feGaussianBlur stdDeviation="2.16"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
-
-                          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                          <feOffset dx="2.16" dy="-2.16"/>
-                          <feGaussianBlur stdDeviation="1.08"/>
-                          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                          <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
-                        </filter>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className={`${appCDStyles.section} ${appCDStyles.section2}`}>
-                <div className={`${tabletStyles.tablet}`}>
-                  <div className={`${tabletStyles.homeButton} ${utilStyles.button} ${utilStyles.round}`} />
-                  <div className={profileStyles.userLayout}>
-                    <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
-                    <div className={profileStyles.name}>
-                      <input type="text" value="Kenrick Halff" />
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="2.16" dy="-2.16"/>
+                            <feGaussianBlur stdDeviation="1.08"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+                          </filter>
+                        </defs>
+                      </svg>
                     </div>
-                    <div className={profileStyles.info}>
-                      <ul>
-                        <li>
-                          <label htmlFor="birthday">Birthday</label>
-                          <input type="date" name="birthday" id="birthday" />
-                        </li>
-                        <li>
-                          <label htmlFor="favoriteSnack">Favorite snack</label>
-                          <input type="text" name="favoriteSnack" id="favoriteSnack" />
-                        </li>
-                        <li>
-                          <label htmlFor="catchphrase">Catchphrase</label>
-                          <input type="text" name="catchphrase" id="catchphrase" />
-                        </li>                    
-                      </ul>
+                    <ul className={jarStyles.itemList}>
+                      <li className={`${jarStyles.item} ${messageStyles.star}`}>
+                        {jarItems[0]()}
+                      </li>
+                      <li className={`${jarStyles.item} ${messageStyles.heart}`}>
+                        {jarItems[1]()}                      
+                      </li>
+                      <li className={`${jarStyles.item} ${messageStyles.candy}`}>
+                        {jarItems[2]()}                      
+                      </li>
+                      <li className={`${jarStyles.item} ${messageStyles.flower}`}>
+                        {jarItems[3]()}
+                      </li>
+                    </ul>
+                    <div className={jarStyles.rim}>
+                      <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g filter="url(#filter1_biiii)">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
+                        </g>
+                        <defs>
+                          <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+                            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="-4.32" dy="4.32"/>
+                            <feGaussianBlur stdDeviation="2.16"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="-2.16" dy="2.16"/>
+                            <feGaussianBlur stdDeviation="1.08"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="4.32" dy="-4.32"/>
+                            <feGaussianBlur stdDeviation="2.16"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="2.16" dy="-2.16"/>
+                            <feGaussianBlur stdDeviation="1.08"/>
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+                            <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+                          </filter>
+                        </defs>
+                      </svg>
                     </div>
-                    <div className={profileStyles.settings}>
-                      <ul>
-                        <li>
-                          <input type="checkbox" name="consentMail" id="consentMail" defaultValue="checked" />
-                          <label htmlFor="consentMail">Get the newsletter</label>
-                        </li>
-                        <li>
-                          <input type="checkbox" name="consentData" id="consentData" defaultValue="checked" />
-                          <label htmlFor="consentData">Share analytical data</label>
-                        </li>
-                        <li>
-                          <input type="checkbox" name="consentCookies" id="consentCookies" defaultValue="checked" />
-                          <label htmlFor="consentCookies">Accept cookies</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={profileStyles.stickers}></div>
                   </div>
                 </div>
-              </div>
-              <div className={`${appCDStyles.section} ${appCDStyles.section3}`}>
-                <div className={`${friendbookStyles.friendbook}`}>
-                  <div className={`${friendbookStyles.leftpage}`}>
-                    <div className={profileStyles.friendLayout}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section2}`}>
+                  <div className={`${tabletStyles.tablet}`}>
+                    <div className={`${tabletStyles.homeButton} ${utilStyles.button} ${utilStyles.round}`} />
+                    <div className={profileStyles.userLayout}>
                       <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
-                      <div className={profileStyles.name}>Kenrick Halff</div>
+                      <div className={profileStyles.name}>
+                        <input type="text" value="Kenrick Halff" />
+                      </div>
                       <div className={profileStyles.info}>
                         <ul>
                           <li>
-                            Birthday: November 5th 1993
+                            <label htmlFor="birthday">Birthday</label>
+                            <input type="date" name="birthday" id="birthday" />
                           </li>
                           <li>
-                            Favorite snack: Frikandel
+                            <label htmlFor="favoriteSnack">Favorite snack</label>
+                            <input type="text" name="favoriteSnack" id="favoriteSnack" />
                           </li>
                           <li>
-                            Catchphrase: That's life
+                            <label htmlFor="catchphrase">Catchphrase</label>
+                            <input type="text" name="catchphrase" id="catchphrase" />
                           </li>                    
                         </ul>
                       </div>
-                    </div>
-                  </div>
-                  <div className={`${friendbookStyles.rightpage}`}>
-                    <div className={profileStyles.friendLayout}>
-                      <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
-                      <div className={profileStyles.name}>Kenrick Halff</div>
-                      <div className={profileStyles.info}>
+                      <div className={profileStyles.settings}>
                         <ul>
                           <li>
-                            Birthday: November 5th 1993
+                            <input type="checkbox" name="consentMail" id="consentMail" defaultValue="checked" />
+                            <label htmlFor="consentMail">Get the newsletter</label>
                           </li>
                           <li>
-                            Favorite snack: Frikandel
+                            <input type="checkbox" name="consentData" id="consentData" defaultValue="checked" />
+                            <label htmlFor="consentData">Share analytical data</label>
                           </li>
                           <li>
-                            Catchphrase: That's life
-                          </li>                    
+                            <input type="checkbox" name="consentCookies" id="consentCookies" defaultValue="checked" />
+                            <label htmlFor="consentCookies">Accept cookies</label>
+                          </li>
                         </ul>
+                      </div>
+                      <div className={profileStyles.stickers}></div>
+                    </div>
+                  </div>
+                </div>
+                <div className={`${appCDStyles.section} ${appCDStyles.section3}`}>
+                  <div className={`${friendbookStyles.friendbook}`}>
+                    <div className={`${friendbookStyles.leftpage}`}>
+                      <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
+                        <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
+                        <div className={profileStyles.name}>Kenrick Halff</div>
+                        <div className={profileStyles.info}>
+                          <ul>
+                            <li>
+                              Birthday: November 5th 1993
+                            </li>
+                            <li>
+                              Favorite snack: Frikandel
+                            </li>
+                            <li>
+                              Catchphrase: That's life
+                            </li>                    
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={`${friendbookStyles.rightpage}`}>
+                      <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
+                        <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
+                        <div className={profileStyles.name}>Kenrick Halff</div>
+                        <div className={profileStyles.info}>
+                          <ul>
+                            <li>
+                              Birthday: November 5th 1993
+                            </li>
+                            <li>
+                              Favorite snack: Frikandel
+                            </li>
+                            <li>
+                              Catchphrase: That's life
+                            </li>                    
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
-                <ul className={`${writetoolsStyles.shapes}`}>
-                    <li onClick={() => setMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
-                      {jarItems[0](paperColor)}
-                    </li>
-                    <li onClick={() => setMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
-                      {jarItems[1](paperColor)}
-                    </li>
-                    <li onClick={() => setMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
-                      {jarItems[2](paperColor)}
-                    </li>
-                    <li onClick={() => setMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
-                      {jarItems[3](paperColor, pencilColor)}
-                    </li>
-                  </ul>
-                  {/*onClick={() => setMessageForm(MessageForm.UNFOLDED)}*/} 
-                <div className={`${writetoolsStyles.message} ${messageForm !== MessageForm.UNFOLDED && writetoolsStyles.folded}`}>
-                  {(() => {
-                    switch(messageForm) {
-                      case MessageForm.UNFOLDED:
-                        return (<>
-                          <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
-                            <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
-                              <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
-                            </g>
-                            <defs>
-                              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                                <feOffset/>
-                                <feGaussianBlur stdDeviation="1"/>
-                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-                              </filter>
-                            </defs>
-                          </svg>
-                          <div className={writetoolsStyles.textareaWrapper}>
-                            <div className={writetoolsStyles.pullTab} />
-                            <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
-                          </div>
-                        </>)
-                        break;
-                      case MessageForm.STAR:
-                        return (<div ref={drag}>{jarItems[0](paperColor)}</div>);
-                        break;
-                      case MessageForm.HEART:
-                        return (<div ref={drag}>{jarItems[1](paperColor)}</div>);
-                        break;
-                      case MessageForm.CANDY:
-                        return (<div ref={drag}>{jarItems[2](paperColor)}</div>);
-                        break;
-                      case MessageForm.FLOWER:
-                        return (<div ref={drag}>{jarItems[3](paperColor, pencilColor)}</div>);
-                        break;
-                    }
-                  
-                  })()}
-                </div>
-                <div className={`${writetoolsStyles.pencil}`}>
-                  <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
-                    <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
-                    <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
-                    <path d="M6.10352e-05 1.00005L9.00006 0V130L6.10352e-05 129V1.00005Z" fill="#C3711E"/>
-                    <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
-                    <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
-                    <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
-                    <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill={pencilColor}/>
-                    <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill={tinycolor(pencilColor).lighten(10).toString()}/>
-                    <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill={tinycolor(pencilColor).darken(10).toString()}/>
-                  </svg>
+                <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
+                  <ul className={`${writetoolsStyles.shapes}`}>
+                      <li onClick={() => setMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
+                        {jarItems[0](paperColor)}
+                      </li>
+                      <li onClick={() => setMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
+                        {jarItems[1](paperColor)}
+                      </li>
+                      <li onClick={() => setMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
+                        {jarItems[2](paperColor)}
+                      </li>
+                      <li onClick={() => setMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
+                        {jarItems[3](paperColor, pencilColor)}
+                      </li>
+                    </ul>
+                    {/*onClick={() => setMessageForm(MessageForm.UNFOLDED)}*/} 
+                  {messageForm === MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea}`}>
+                    {renderMessage()}
+                  </div>}
+                  <div className={`${writetoolsStyles.pencil}`}>
+                    <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
+                      <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
+                      <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
+                      <path d="M6.10352e-05 1.00005L9.00006 0V130L6.10352e-05 129V1.00005Z" fill="#C3711E"/>
+                      <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
+                      <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
+                      <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
+                      <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill={pencilColor}/>
+                      <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill={tinycolor(pencilColor).lighten(10).toString()}/>
+                      <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill={tinycolor(pencilColor).darken(10).toString()}/>
+                    </svg>
+                  </div>
                 </div>
               </div>
+              <nav 
+                className={`${appCDStyles.cdNav} ${appCDStyles['nav-active-'+activeNavIndex]}`}
+                onClick={(e) => { setShowNav(true); stopEventProp(e) }}
+                // onTouchMove={(e) => getAngleFromEvent(e, setNavRotation)}
+                // onMouseMove={(e) => getAngleFromEvent(e, setNavRotation)}
+              >
+                {
+                  navItems.map((item: ReactSVGElement, i) => {
+                    const onClick = showNav ? (e: any) => { setActiveNavIndex(prevNav => calculateNavRotation(i, prevNav, setNavRotation)); stopEventProp(e)} : undefined;
+                    return <div key={"nav-" + (i+1)} onClick={onClick}>{item}</div>
+                  })
+                }
+                </nav>
             </div>
-            <nav 
-              className={`${appCDStyles.cdNav} ${appCDStyles['nav-active-'+activeNavIndex]}`}
-              onClick={(e) => { setShowNav(true); stopEventProp(e) }}
-              // onTouchMove={(e) => getAngleFromEvent(e, setNavRotation)}
-              // onMouseMove={(e) => getAngleFromEvent(e, setNavRotation)}
-            >
-              {
-                navItems.map((item: ReactSVGElement, i) => {
-                  const onClick = showNav ? (e: any) => { setActiveNavIndex(prevNav => calculateNavRotation(i, prevNav, setNavRotation)); stopEventProp(e)} : undefined;
-                  return <div key={"nav-" + (i+1)} onClick={onClick}>{item}</div>
-                })
-              }
-              </nav>
-          </div>
+          </>
         ) : (
           <div onClick={_ => {
             if (showLoginForm) {
               setShowLoginForm(false)
             }
             if (showRegisterForm) {
-              setShowRegisterForm(false);
+              setShowRegisterForm(false)
             }
             if (showLetter) {
-              setShowLetter(false);
+              setShowLetter(false)
             }
           }} style={{width: '100vw', height: '100vh', position: 'absolute'}}>
             <div>
