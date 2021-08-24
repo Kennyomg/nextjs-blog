@@ -48,26 +48,26 @@ const navItems = [
   // (<object type="image/svg+xml" data={BookIcon} />),
   // (<object type="image/svg+xml" data={WriteMessageIcon} />),
   (<svg width="28" height="31" viewBox="0 0 28 31" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M26.0614 3.19685C26.0614 1.43128 24.6301 0 22.8645 0H7.13545C5.36988 0 3.9386 1.43128 3.9386 3.19685V5.92763C3.9386 6.18503 4.14726 6.3937 4.40467 6.3937C4.807 6.3937 5.02702 6.87539 4.7835 7.19565C3.04017 9.48833 2 12.3821 2 15.5276C2 22.9682 7.8203 29 15 29C22.1797 29 28 22.9682 28 15.5276C28 12.3821 26.9598 9.48833 25.2165 7.19565C24.973 6.87539 25.193 6.3937 25.5953 6.3937C25.8527 6.3937 26.0614 6.18503 26.0614 5.92763V3.19685Z" fill="#F2F2F2"/></g></svg>),
-  (<svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#pi_clip0)"><path d="M14.3138 26.5399H2.68606C2.68606 26.5399 0.773584 10.9832 8.49991 10.9832C16.2262 10.9832 14.3138 26.5399 14.3138 26.5399V26.5399Z" fill="white"/><path d="M14.3137 27.0001H2.68628C2.44842 27.0001 2.24775 26.8261 2.21928 26.5945C2.16785 26.1741 0.995046 16.2484 4.64937 12.2136C5.66558 11.0913 6.96099 10.5225 8.49977 10.5225C10.0386 10.5225 11.3344 11.0913 12.3506 12.2136C16.005 16.2484 14.8322 26.1741 14.7807 26.5945C14.7523 26.8261 14.5516 27.0001 14.3137 27.0001ZM3.11105 26.0792H13.889C14.068 24.1785 14.6283 16.1157 11.6467 12.8242C10.805 11.8948 9.77543 11.4434 8.49977 11.4434C7.22411 11.4434 6.19504 11.8948 5.35332 12.8238C2.37173 16.1153 2.93196 24.1785 3.11105 26.0792V26.0792Z" fill="white"/><path d="M8.49991 9.24984C10.9786 9.24984 12.988 7.28222 12.988 4.85503C12.988 2.42783 10.9786 0.460205 8.49991 0.460205C6.02119 0.460205 4.0118 2.42783 4.0118 4.85503C4.0118 7.28222 6.02119 9.24984 8.49991 9.24984Z" fill="white"/><path d="M8.49977 9.71031C5.76615 9.71031 3.54178 7.53218 3.54178 4.85493C3.54178 2.17813 5.76615 0 8.49977 0C11.2339 0 13.4582 2.17813 13.4582 4.85493C13.4582 7.53218 11.2339 9.71031 8.49977 9.71031ZM8.49977 0.920894C6.28459 0.920894 4.48222 2.68579 4.48222 4.85493C4.48222 7.02452 6.28459 8.78941 8.49977 8.78941C10.7154 8.78941 12.5178 7.02452 12.5178 4.85493C12.5178 2.68579 10.7154 0.920894 8.49977 0.920894V0.920894Z" fill="white"/></g><defs><clipPath id="pi_clip0"><rect width="13" height="27" fill="white" transform="translate(2)"/></clipPath></defs></svg>),
+  (<svg width="15" height="29" viewBox="0 0 15 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g clipPath="url(#pi_clip0)"><path d="M14.3138 26.5399H2.68606C2.68606 26.5399 0.773584 10.9832 8.49991 10.9832C16.2262 10.9832 14.3138 26.5399 14.3138 26.5399V26.5399Z" fill="white"/><path d="M14.3137 27.0001H2.68628C2.44842 27.0001 2.24775 26.8261 2.21928 26.5945C2.16785 26.1741 0.995046 16.2484 4.64937 12.2136C5.66558 11.0913 6.96099 10.5225 8.49977 10.5225C10.0386 10.5225 11.3344 11.0913 12.3506 12.2136C16.005 16.2484 14.8322 26.1741 14.7807 26.5945C14.7523 26.8261 14.5516 27.0001 14.3137 27.0001ZM3.11105 26.0792H13.889C14.068 24.1785 14.6283 16.1157 11.6467 12.8242C10.805 11.8948 9.77543 11.4434 8.49977 11.4434C7.22411 11.4434 6.19504 11.8948 5.35332 12.8238C2.37173 16.1153 2.93196 24.1785 3.11105 26.0792V26.0792Z" fill="white"/><path d="M8.49991 9.24984C10.9786 9.24984 12.988 7.28222 12.988 4.85503C12.988 2.42783 10.9786 0.460205 8.49991 0.460205C6.02119 0.460205 4.0118 2.42783 4.0118 4.85503C4.0118 7.28222 6.02119 9.24984 8.49991 9.24984Z" fill="white"/><path d="M8.49977 9.71031C5.76615 9.71031 3.54178 7.53218 3.54178 4.85493C3.54178 2.17813 5.76615 0 8.49977 0C11.2339 0 13.4582 2.17813 13.4582 4.85493C13.4582 7.53218 11.2339 9.71031 8.49977 9.71031ZM8.49977 0.920894C6.28459 0.920894 4.48222 2.68579 4.48222 4.85493C4.48222 7.02452 6.28459 8.78941 8.49977 8.78941C10.7154 8.78941 12.5178 7.02452 12.5178 4.85493C12.5178 2.68579 10.7154 0.920894 8.49977 0.920894V0.920894Z" fill="white"/></g><defs><clipPath id="pi_clip0"><rect width="13" height="27" fill="white" transform="translate(2)"/></clipPath></defs></svg>),
   (<svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg"><g><rect x="5" y="3" width="16" height="22" fill="#F2F2F2"/><rect x="21" y="3" width="16" height="22" fill="#F2F2F2"/></g></svg>),
-  (<svg width="50" height="29" viewBox="0 0 50 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M14 4H46V27H2V16L14 4Z" fill="white"/></g><g><path d="M2 16H14V4L2 16Z" fill="white"/></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M47.6357 4.54386L45.0393 1.9474L45.0392 1.94737L42.9688 0.123333L42.9687 0.123171L27.2025 15.8894L27.2041 16.1374L27.1875 16.1207L27.2177 19.3513L27.2091 19.3448L27.2091 19.3508L27.2056 19.3482L27.2455 22.331L27.2456 22.3353L27.2456 22.3375L27.2476 22.3375L30.2349 22.3775L30.2259 22.3654L33.4624 22.3956L33.4457 22.379L33.6937 22.3806L33.6937 22.3806L49.4599 6.61442L47.6357 4.54388L47.5126 4.66705L47.5126 4.66704L47.6357 4.54386ZM31.6232 20.5564L31.7464 20.4333L31.7463 20.4332L31.6232 20.5564L31.6232 20.5564Z" fill="white"/></g></svg>)
+  (<svg width="50" height="29" viewBox="0 0 50 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path fillRule="evenodd" clipRule="evenodd" d="M14 4H46V27H2V16L14 4Z" fill="white"/></g><g><path d="M2 16H14V4L2 16Z" fill="white"/></g><g><path fillRule="evenodd" clipRule="evenodd" d="M47.6357 4.54386L45.0393 1.9474L45.0392 1.94737L42.9688 0.123333L42.9687 0.123171L27.2025 15.8894L27.2041 16.1374L27.1875 16.1207L27.2177 19.3513L27.2091 19.3448L27.2091 19.3508L27.2056 19.3482L27.2455 22.331L27.2456 22.3353L27.2456 22.3375L27.2476 22.3375L30.2349 22.3775L30.2259 22.3654L33.4624 22.3956L33.4457 22.379L33.6937 22.3806L33.6937 22.3806L49.4599 6.61442L47.6357 4.54388L47.5126 4.66705L47.5126 4.66704L47.6357 4.54386ZM31.6232 20.5564L31.7464 20.4333L31.7463 20.4332L31.6232 20.5564L31.6232 20.5564Z" fill="white"/></g></svg>)
 ]
 
 const jarItems = [
-  (color = "#E75187") => (<svg width="auto" height="auto" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+  (color = "#E75187") => (<svg width="100%" height="100%" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill={color}/>
   </svg>),
-  (color = "#C4C4C4") => (<svg width="auto" height="auto" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill={color}/>
 </svg>),
-  (color = "#C4C4C4") => (<svg width="auto" height="auto" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="28.0441" cy="17.0442" r="10.3423" fill={color}/>
   <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill={color}/>
   <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill={color}/>
   <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill={color}/>
   <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill={color}/>
 </svg>),
-  (color = "#DB4545", accentColor = tinycolor("#DB4545").lighten(20).toString()) => (<svg width="auto" height="auto" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  (color = "#DB4545", accentColor = tinycolor("#DB4545").lighten(20).toString()) => (<svg width="100%" height="100%" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="15" cy="7" r="7" fill={color}/>
   <circle cx="23" cy="14" r="7" fill={color}/>
   <circle cx="20" cy="23" r="7" fill={color}/>
@@ -77,6 +77,13 @@ const jarItems = [
 </svg>)
 ]
 
+
+function getClientPos(e: any) {
+  return {
+    clientX: e.clientX | parseInt(e.changedTouches && e.changedTouches[0].clientX, 10),
+    clientY: e.clientY | parseInt(e.changedTouches && e.changedTouches[0].clientY, 10), 
+  }
+}
 
 function getAngleFromEvent(e: any, setRotation: any) {
   const circle = e.target as HTMLElement
@@ -152,25 +159,29 @@ function allowDrop(e: any) {
   stopEventProp(e)
 }
 
-function drag(e: any) {
-  // console.log(e.target)
-  // e.target.style.visibility = 'hidden'
+function dragStart(e: any, setIsDragging, setDragStartPosition) {
+  const { clientX } = getClientPos(e)
+
+  setIsDragging(true)
+  setDragStartPosition(clientX)
 }
 
-function dragging(e: any, setNavRotation) {
-  // e.target.style.top = e.clientY
-  const clientX = e.clientX | parseInt(e.changedTouches && e.changedTouches[0].clientX, 10)
-  e.currentTarget.style.left = clientX
+function dragEnd(e: any, setIsDragging, setDragStartPosition, setDragPosition) {
+  setIsDragging(false)
+  setDragStartPosition(0)
+}
 
-  console.log({target: e.currentTarget, clientX})
+function dragging(e: any, setNavRotation, setDragPosition) {
+  // e.target.style.top = e.clientY
+  const { clientX } = getClientPos(e)
+  setDragPosition(clientX)
 
   if (clientX < document.body.clientWidth / 2) {
     console.log("Rotating Left")
-    setNavRotation(prevRotation => prevRotation + 0.1)
+    // setNavRotation(prevRotation => prevRotation + 0.1)
   }
   if (clientX > document.body.clientWidth / 2) {
     console.log("Rotating Right")
-    setNavRotation(prevRotation => prevRotation - 0.1)
   }
 }
 
@@ -196,14 +207,38 @@ export default function Home() {
   const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
 
   const [ isDragging, setIsDragging ] = useState(false)
+  const [ dragStartPosition, setDragStartPosition ] = useState(0)
+  const [ dragPosition, setDragPosition ] = useState(0)
+
+  let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
+
+  // console.log({dragStartPosition, dragPosition, dragDistance})
   
+  if (isDragging && dragDistance > 100) {
+    dragDistance = 100;
+    setActiveNavIndex(prevNav => calculateNavRotation(prevNav === 3 ? 0 : prevNav + 1, prevNav, setNavRotation))
+    setNavRotation(prevRotation => prevRotation - 0.1)
+    setDragPosition(0)
+    setDragStartPosition(0)
+    setIsDragging(false)
+  }
+
+  if (isDragging && dragDistance < -100) {
+    dragDistance = -100;
+    setActiveNavIndex(prevNav => calculateNavRotation(prevNav === 0 ? 3 : prevNav - 1, prevNav, setNavRotation))
+    setNavRotation(prevRotation => prevRotation + 0.1)
+    setDragPosition(0)
+    setDragStartPosition(0)
+    setIsDragging(false)
+  }
   
+
 
   const renderMessage = () => {
     switch(messageForm) {
       case MessageForm.UNFOLDED:
         return (<>
-          <svg width="auto" height="auto" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="100%" height="100%" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
             <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
               <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
@@ -227,16 +262,16 @@ export default function Home() {
         </>)
         break;
       case MessageForm.STAR:
-        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[0](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[0](paperColor)}</div>);
         break;
       case MessageForm.HEART:
-        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[1](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[1](paperColor)}</div>);
         break;
       case MessageForm.CANDY:
-        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[2](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[2](paperColor)}</div>);
         break;
       case MessageForm.FLOWER:
-        return (<div draggable="false" onMouseDown={(e) => setIsDragging(true)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation)} onTouchStart={(e) => setIsDragging(true)}>{jarItems[3](paperColor, pencilColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[3](paperColor, pencilColor)}</div>);
         break;
     }
   }
@@ -281,12 +316,12 @@ export default function Home() {
                 if (showPaperColorPicker) setShowPaperColorPicker(false)
                 if (showPencilColorPicker) setShowPencilColorPicker(false)
               }}
-              onMouseUp={(e) => isDragging && setIsDragging(false)} onTouchEnd={(e) => isDragging && setIsDragging(false)}>
+              onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>
               <div className={appCDStyles.cdBg}>
                 <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
                   <div className={jarStyles.jar} onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop}>
                     <div className={jarStyles.bottom}>
-                      <svg width="auto" height="auto" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_biiii)">
                           <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
                         </g>
@@ -343,7 +378,7 @@ export default function Home() {
                       </li>
                     </ul>
                     <div className={jarStyles.rim}>
-                      <svg width="auto" height="auto" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg width="100%" height="100%" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter1_biiii)">
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
                         </g>
@@ -493,7 +528,7 @@ export default function Home() {
                     {renderMessage()}
                   </div>}
                   <div className={`${writetoolsStyles.pencil}`}>
-                    <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="auto" height="auto" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="100%" height="100%" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
                       <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
                       <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
@@ -511,8 +546,6 @@ export default function Home() {
               <nav 
                 className={`${appCDStyles.cdNav} ${appCDStyles['nav-active-'+activeNavIndex]}`}
                 onClick={(e) => { setShowNav(true); stopEventProp(e) }}
-                // onTouchMove={(e) => getAngleFromEvent(e, setNavRotation)}
-                // onMouseMove={(e) => getAngleFromEvent(e, setNavRotation)}
               >
                 {
                   navItems.map((item: ReactSVGElement, i) => {
