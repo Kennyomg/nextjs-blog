@@ -159,30 +159,24 @@ function allowDrop(e: any) {
   stopEventProp(e)
 }
 
-function dragStart(e: any, setIsDragging, setDragStartPosition) {
+function dragStart(e: any, setIsDragging, setDragStartPosition, setDragPosition) {
   const { clientX } = getClientPos(e)
 
   setIsDragging(true)
   setDragStartPosition(clientX)
+  setDragPosition(clientX)
 }
 
 function dragEnd(e: any, setIsDragging, setDragStartPosition, setDragPosition) {
   setIsDragging(false)
   setDragStartPosition(0)
+  setDragPosition(0)
 }
 
-function dragging(e: any, setNavRotation, setDragPosition) {
+function dragging(e: any, setDragPosition) {
   // e.target.style.top = e.clientY
   const { clientX } = getClientPos(e)
   setDragPosition(clientX)
-
-  if (clientX < document.body.clientWidth / 2) {
-    console.log("Rotating Left")
-    // setNavRotation(prevRotation => prevRotation + 0.1)
-  }
-  if (clientX > document.body.clientWidth / 2) {
-    console.log("Rotating Right")
-  }
 }
 
 function drop(e: any, currNavIndex, setNavRotation) {
@@ -262,16 +256,16 @@ export default function Home() {
         </>)
         break;
       case MessageForm.STAR:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[0](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[0](paperColor)}</div>);
         break;
       case MessageForm.HEART:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[1](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[1](paperColor)}</div>);
         break;
       case MessageForm.CANDY:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[2](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[2](paperColor)}</div>);
         break;
       case MessageForm.FLOWER:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition)} onMouseMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setNavRotation, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition)}>{jarItems[3](paperColor, pencilColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[3](paperColor, pencilColor)}</div>);
         break;
     }
   }

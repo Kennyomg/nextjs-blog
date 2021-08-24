@@ -64,6 +64,10 @@
     transition: filter .5s ease-in-out;
 }
 
+.folded:not(.messageDragArea) > div {
+    transition: left .5s ease-in-out;
+}
+
 .messageDragArea svg {
     filter: var(--filter-drop-shadow-high);
 }
