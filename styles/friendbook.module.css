@@ -27,6 +27,7 @@
     width: 50%;
     float: left;
     background-color: white;
+    position: relative;
 }
 
 .rightpage {
@@ -34,4 +35,5 @@
     width: 50%;
     float: right;
     background-color: white;
+    position: relative;
 }

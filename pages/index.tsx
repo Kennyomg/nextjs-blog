@@ -77,6 +77,8 @@ const jarItems = [
 </svg>)
 ]
 
+const dropMessageButton = (onClick) => <div onClick={onClick} className={appCDStyles.dropMessage}>&#x21E9;</div>
+
 
 function getClientPos(e: any) {
   return {
@@ -184,6 +186,33 @@ function drop(e: any, currNavIndex, setNavRotation) {
   resetRotationToCurrIndex(currNavIndex, setNavRotation)
 }
 
+function showDropMessageButton(messageForm: MessageForm, activeNavIndex: number, buttonAtIndex: number) {
+  return messageForm !== MessageForm.UNFOLDED && activeNavIndex === buttonAtIndex;
+}
+
+function dropMessageInJar() {
+  // Drop message in jar
+  // Save message to jar database
+  // Show new paper at writingtools
+}
+
+function dropMessageInLeftpage() {
+  // Drop message in jar on leftpage
+  // Send message to leftpage contact
+  // Show new paper at writingtools
+}
+
+function dropMessageInRightpage() {
+  // Drop message in jar on rightpage
+  // Send message to rightpage contact
+  // Show new paper at writingtools
+}
+
+function dropMessageInWritingtools(setMessageForm) {
+  // Drop message between writingtools
+  // Unfold message
+  setMessageForm(MessageForm.UNFOLDED)
+}
 
 export default function Home() {
   const [ showNav, setShowNav ] = useState(false)
@@ -205,9 +234,6 @@ export default function Home() {
   const [ dragPosition, setDragPosition ] = useState(0)
 
   let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
-
-  // console.log({dragStartPosition, dragPosition, dragDistance})
-  
   if (isDragging && dragDistance > 100) {
     dragDistance = 100;
     setActiveNavIndex(prevNav => calculateNavRotation(prevNav === 3 ? 0 : prevNav + 1, prevNav, setNavRotation))
@@ -225,21 +251,19 @@ export default function Home() {
     setDragStartPosition(0)
     setIsDragging(false)
   }
-  
-
 
   const renderMessage = () => {
     switch(messageForm) {
       case MessageForm.UNFOLDED:
         return (<>
           <svg width="100%" height="100%" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
+            <path fillRule="evenodd" clipRule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
             <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
               <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
             </g>
             <defs>
-              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                 <feOffset/>
                 <feGaussianBlur stdDeviation="1"/>
@@ -313,15 +337,16 @@ export default function Home() {
               onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>
               <div className={appCDStyles.cdBg}>
                 <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
-                  <div className={jarStyles.jar} onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop}>
+                  <div className={`${jarStyles.jar}`} onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop}>
+                    {showDropMessageButton(messageForm, activeNavIndex, 0) && dropMessageButton(dropMessageInJar)}
                     <div className={jarStyles.bottom}>
                       <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_biiii)">
-                          <circle cx="37" cy="37" r="37" fill="#C4C4C4" fill-opacity="0.109"/>
+                          <circle cx="37" cy="37" r="37" fill="#C4C4C4" fillOpacity="0.109"/>
                         </g>
                         <defs>
-                          <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                             <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
                             <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
                             <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
@@ -374,11 +399,11 @@ export default function Home() {
                     <div className={jarStyles.rim}>
                       <svg width="100%" height="100%" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter1_biiii)">
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fill-opacity="0.109"/>
+                          <path fillRule="evenodd" clipRule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fillOpacity="0.109"/>
                         </g>
                         <defs>
-                          <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                             <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
                             <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
                             <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
@@ -422,7 +447,7 @@ export default function Home() {
                     <div className={profileStyles.userLayout}>
                       <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
                       <div className={profileStyles.name}>
-                        <input type="text" value="Kenrick Halff" />
+                        <input type="text" defaultValue="Kenrick Halff" />
                       </div>
                       <div className={profileStyles.info}>
                         <ul>
@@ -463,6 +488,7 @@ export default function Home() {
                 <div className={`${appCDStyles.section} ${appCDStyles.section3}`}>
                   <div className={`${friendbookStyles.friendbook}`}>
                     <div className={`${friendbookStyles.leftpage}`}>
+                      {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(dropMessageInLeftpage)}
                       <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
                         <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
                         <div className={profileStyles.name}>Kenrick Halff</div>
@@ -482,6 +508,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className={`${friendbookStyles.rightpage}`}>
+                      {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(dropMessageInRightpage)}
                       <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
                         <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
                         <div className={profileStyles.name}>Kenrick Halff</div>
@@ -518,9 +545,13 @@ export default function Home() {
                       </li>
                     </ul>
                     {/*onClick={() => setMessageForm(MessageForm.UNFOLDED)}*/} 
-                  {messageForm === MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea}`}>
-                    {renderMessage()}
-                  </div>}
+                  {messageForm === MessageForm.UNFOLDED ? 
+                    <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea}`}>
+                      {renderMessage()}
+                    </div> 
+                    :
+                    showDropMessageButton(messageForm, activeNavIndex, 3) && dropMessageButton(() => dropMessageInWritingtools(setMessageForm))
+                  }
                   <div className={`${writetoolsStyles.pencil}`}>
                     <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="100%" height="100%" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>

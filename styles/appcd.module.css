@@ -211,3 +211,23 @@
 .nav-active-3 div:nth-child(4) g * {
     filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 25%));
 }
+
+/* Drop message */
+.dropMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: var(--circle-radius);
+    background-color: var(--color-1);
+    color: white;
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: all;
+    cursor: pointer;
+}
