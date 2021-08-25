@@ -2,7 +2,6 @@
 import { ReactSVGElement, useState } from 'react'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
-// import { useDrag, useDrop } from 'react-dnd'
 import tinycolor from 'tinycolor2'
 
 // Components
@@ -53,21 +52,21 @@ const navItems = [
   (<svg width="50" height="29" viewBox="0 0 50 29" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path fillRule="evenodd" clipRule="evenodd" d="M14 4H46V27H2V16L14 4Z" fill="white"/></g><g><path d="M2 16H14V4L2 16Z" fill="white"/></g><g><path fillRule="evenodd" clipRule="evenodd" d="M47.6357 4.54386L45.0393 1.9474L45.0392 1.94737L42.9688 0.123333L42.9687 0.123171L27.2025 15.8894L27.2041 16.1374L27.1875 16.1207L27.2177 19.3513L27.2091 19.3448L27.2091 19.3508L27.2056 19.3482L27.2455 22.331L27.2456 22.3353L27.2456 22.3375L27.2476 22.3375L30.2349 22.3775L30.2259 22.3654L33.4624 22.3956L33.4457 22.379L33.6937 22.3806L33.6937 22.3806L49.4599 6.61442L47.6357 4.54388L47.5126 4.66705L47.5126 4.66704L47.6357 4.54386ZM31.6232 20.5564L31.7464 20.4333L31.7463 20.4332L31.6232 20.5564L31.6232 20.5564Z" fill="white"/></g></svg>)
 ]
 
-const jarItems = [
-  (color = "#E75187") => (<svg width="100%" height="100%" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+const jarItems = {
+  [MessageForm.STAR]: (color = "#E75187") => (<svg width="100%" height="100%" viewBox="0 0 35 33" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M11.8438 4.18511C13.8821 -0.926795 21.1179 -0.926795 23.1562 4.18511C24.0259 6.36621 26.0722 7.85293 28.4153 8.00607C33.9069 8.36498 36.1429 15.2466 31.9111 18.7649C30.1055 20.266 29.3239 22.6716 29.9023 24.9473C31.2579 30.281 25.4041 34.5341 20.7503 31.5966C18.7647 30.3433 16.2353 30.3433 14.2497 31.5966C9.59594 34.5341 3.74206 30.281 5.09771 24.9473C5.67612 22.6716 4.89451 20.266 3.08891 18.7649C-1.14292 15.2466 1.09307 8.36498 6.58466 8.00607C8.92777 7.85293 10.9741 6.36621 11.8438 4.18511Z" fill={color}/>
   </svg>),
-  (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  [MessageForm.HEART]: (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M16.5 34.5C-5 22 -2.00002 -4 9.22175 1.27371C23.5 7.5 12 7.54742 24.5 1.27371C37 -5 39 23 16.5 34.5Z" fill={color}/>
 </svg>),
-  (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+  [MessageForm.CANDY]: (color = "#C4C4C4") => (<svg width="100%" height="100%" viewBox="0 0 56 35" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="28.0441" cy="17.0442" r="10.3423" fill={color}/>
   <path d="M10.9146 17.131C10.9146 12.0772 16.039 8.63677 20.7166 10.5502L30.5884 14.5884C31.5904 14.9983 32.2451 15.9735 32.2451 17.0562V17.0562C32.2452 18.1263 31.6054 19.0928 30.6202 19.5107L20.8016 23.6764C16.1128 25.6657 10.9146 22.2243 10.9146 17.131V17.131Z" fill={color}/>
   <path d="M10.9146 7.50331C10.9146 7.04386 11.3804 6.73109 11.8057 6.90505L31.8435 15.1019C32.0864 15.2012 32.2451 15.4377 32.2451 15.7001V18.3934C32.2451 18.6528 32.09 18.8871 31.8512 18.9884L11.8134 27.4898C11.3871 27.6706 10.9146 27.3577 10.9146 26.8947L10.9146 7.50331Z" fill={color}/>
   <path d="M45.3347 17.131C45.3347 12.0772 40.2102 8.63677 35.5326 10.5502L25.6609 14.5884C24.6588 14.9983 24.0041 15.9735 24.0041 17.0562V17.0562C24.0041 18.1263 24.6439 19.0928 25.629 19.5107L35.4476 23.6764C40.1364 25.6657 45.3347 22.2243 45.3347 17.131V17.131Z" fill={color}/>
   <path d="M45.3347 7.50331C45.3347 7.04386 44.8688 6.73109 44.4436 6.90505L24.4058 15.1019C24.1628 15.2012 24.0041 15.4377 24.0041 15.7001V18.3934C24.0041 18.6528 24.1592 18.8871 24.398 18.9884L44.4359 27.4898C44.8621 27.6706 45.3347 27.3577 45.3347 26.8947L45.3347 7.50331Z" fill={color}/>
 </svg>),
-  (color = "#DB4545", accentColor = tinycolor("#DB4545").lighten(20).toString()) => (<svg width="100%" height="100%" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  [MessageForm.FLOWER]: (color = "#DB4545", accentColor = tinycolor("#DB4545").lighten(20).toString()) => (<svg width="100%" height="100%" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="15" cy="7" r="7" fill={color}/>
   <circle cx="23" cy="14" r="7" fill={color}/>
   <circle cx="20" cy="23" r="7" fill={color}/>
@@ -75,6 +74,39 @@ const jarItems = [
   <circle cx="7" cy="14" r="7" fill={color}/>
   <circle cx="15" cy="16" r="6" fill={accentColor}/>
 </svg>)
+}
+
+const defaultFriendlist = [
+  { 
+    name: 'Marrit Vermaat',
+    foto: '/images/profile/pf_Kenrick.jpg',
+    info: {
+      'Favorite snack': 'Chippies',
+    },
+  },
+  { 
+    name: 'Kenrick Halff',
+    foto: '/images/profile/pf_Kenrick.jpg',
+    info: {
+      Birthday: 'November 5th 1993',
+      'Favorite snack': 'Frikandel',
+      Catchphrase: 'That\'s life',
+    },
+  },
+  { 
+    name: 'Jeroen Vermaat',
+    foto: '/images/profile/pf_Kenrick.jpg',
+    info: {
+      'Favorite snack': 'Dat lekkere',
+    },
+  },
+  { 
+    name: 'Liliane Snel',
+    foto: '/images/profile/pf_Kenrick.jpg',
+    info: {
+      'Favorite snack': 'Muntdrop',
+    },
+  }
 ]
 
 const dropMessageButton = (onClick) => <div onClick={onClick} className={appCDStyles.dropMessage}>&#x21E9;</div>
@@ -157,10 +189,6 @@ function resetRotationToCurrIndex(currNavIndex, setNavRotation) {
   }
 }
 
-function allowDrop(e: any) {
-  stopEventProp(e)
-}
-
 function dragStart(e: any, setIsDragging, setDragStartPosition, setDragPosition) {
   const { clientX } = getClientPos(e)
 
@@ -176,36 +204,27 @@ function dragEnd(e: any, setIsDragging, setDragStartPosition, setDragPosition) {
 }
 
 function dragging(e: any, setDragPosition) {
-  // e.target.style.top = e.clientY
   const { clientX } = getClientPos(e)
   setDragPosition(clientX)
 }
 
-function drop(e: any, currNavIndex, setNavRotation) {
-  stopEventProp(e)
-  resetRotationToCurrIndex(currNavIndex, setNavRotation)
-}
-
-function showDropMessageButton(messageForm: MessageForm, activeNavIndex: number, buttonAtIndex: number) {
+// Show drop message button when the message is folded and the section is active
+function showDropMessageButton(messageForm: MessageForm, activeNavIndex: number, buttonAtIndex: number): boolean {
   return messageForm !== MessageForm.UNFOLDED && activeNavIndex === buttonAtIndex;
 }
 
-function dropMessageInJar() {
+function dropMessageInJar(messageForm: MessageForm, messageText: string, paperColor: string, pencilColor: string, setJarItemList, resetMessage): void {
   // Drop message in jar
+  setJarItemList((prev: any) => [...prev, {messageForm, messageText, paperColor, pencilColor}])
   // Save message to jar database
   // Show new paper at writingtools
+  resetMessage()
 }
-
-function dropMessageInLeftpage() {
-  // Drop message in jar on leftpage
-  // Send message to leftpage contact
+function dropMessageInFriendpage(resetMessage) {
+  // Drop message in jar on Friendpage
+  // Send message to Friendpage contact
   // Show new paper at writingtools
-}
-
-function dropMessageInRightpage() {
-  // Drop message in jar on rightpage
-  // Send message to rightpage contact
-  // Show new paper at writingtools
+  resetMessage()
 }
 
 function dropMessageInWritingtools(setMessageForm) {
@@ -215,24 +234,33 @@ function dropMessageInWritingtools(setMessageForm) {
 }
 
 export default function Home() {
+  // Nav state
   const [ showNav, setShowNav ] = useState(false)
   const [ activeNavIndex, setActiveNavIndex ] = useState(0)
   const [ navRotation, setNavRotation ] = useState(0)
+  // Loginscreen state
   const [ loggedIn, setLoggedIn ] = useState(false)
   const [ showRegisterForm, setShowRegisterForm ] = useState(false)
   const [ showLoginForm, setShowLoginForm ] = useState(false)
   const [ showLetter, setShowLetter ] = useState(false)
+  // Writingtools state
   const [ pencilColor, setPencilColor ] = useState("#2ae6dc")
   const [ paperColor, setPaperColor ] = useState("#1b2f85")
   const [ showPencilColorPicker, setShowPencilColorPicker ] = useState(false)
   const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
   const [ messageText, setMessageText ] = useState("")
   const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
-
+  // Message dragging state 
   const [ isDragging, setIsDragging ] = useState(false)
   const [ dragStartPosition, setDragStartPosition ] = useState(0)
   const [ dragPosition, setDragPosition ] = useState(0)
+  // Jar state
+  const [ jarItemList, setJarItemList ] = useState([])
+  // Friendbook state
+  const [ friendlist, setFriendlist ] = useState(defaultFriendlist)
+  const [ friendbookIndex, setFriendbookIndex ] = useState(0)
 
+  // Drag behaviour for message drag navigation
   let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
   if (isDragging && dragDistance > 100) {
     dragDistance = 100;
@@ -252,6 +280,8 @@ export default function Home() {
     setIsDragging(false)
   }
 
+  // Message render logic
+  // TODO: Make generic and use for messages in jar and new message
   const renderMessage = () => {
     switch(messageForm) {
       case MessageForm.UNFOLDED:
@@ -280,21 +310,31 @@ export default function Home() {
         </>)
         break;
       case MessageForm.STAR:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[0](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
         break;
       case MessageForm.HEART:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[1](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
         break;
       case MessageForm.CANDY:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[2](paperColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
         break;
       case MessageForm.FLOWER:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[3](paperColor, pencilColor)}</div>);
+        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor, pencilColor)}</div>);
         break;
     }
   }
+
+  // Reset the message state
+  const resetMessage = () => {
+    setMessageForm(MessageForm.UNFOLDED)
+    setMessageText("")
+  }
   
-  
+  // Navigate to CD section
+  const goToPage = (pageIndex) => (e: any) => { 
+    stopEventProp(e)
+    setActiveNavIndex(prevNav => calculateNavRotation(pageIndex, prevNav, setNavRotation))
+  }
 
   // Decide font-size class for message
   let messageSizeClass = 'small'
@@ -336,9 +376,9 @@ export default function Home() {
               }}
               onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>
               <div className={appCDStyles.cdBg}>
-                <div className={`${appCDStyles.section} ${appCDStyles.section1}`}>
-                  <div className={`${jarStyles.jar}`} onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop}>
-                    {showDropMessageButton(messageForm, activeNavIndex, 0) && dropMessageButton(dropMessageInJar)}
+                <div className={`${appCDStyles.section} ${appCDStyles.section1}`} {...(activeNavIndex !== 0) && {onClick:goToPage(0)}}>
+                  <div className={`${jarStyles.jar}`}>
+                    {showDropMessageButton(messageForm, activeNavIndex, 0) && dropMessageButton(() => dropMessageInJar(messageForm, messageText, paperColor, pencilColor, setJarItemList, resetMessage))}
                     <div className={jarStyles.bottom}>
                       <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_biiii)">
@@ -383,18 +423,13 @@ export default function Home() {
                       </svg>
                     </div>
                     <ul className={jarStyles.itemList}>
-                      <li className={`${jarStyles.item} ${messageStyles.star}`}>
-                        {jarItems[0]()}
-                      </li>
-                      <li className={`${jarStyles.item} ${messageStyles.heart}`}>
-                        {jarItems[1]()}                      
-                      </li>
-                      <li className={`${jarStyles.item} ${messageStyles.candy}`}>
-                        {jarItems[2]()}                      
-                      </li>
-                      <li className={`${jarStyles.item} ${messageStyles.flower}`}>
-                        {jarItems[3]()}
-                      </li>
+                      {
+                        jarItemList.map((item, index) =>(
+                          <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[item.messageForm]}`}>
+                            {jarItems[item.messageForm](item.paperColor, item.pencilColor)}
+                          </li>
+                        ))
+                      }
                     </ul>
                     <div className={jarStyles.rim}>
                       <svg width="100%" height="100%" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -441,7 +476,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section2}`}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section2}`} {...(activeNavIndex !== 1) && {onClick:goToPage(1)}}>
                   <div className={`${tabletStyles.tablet}`}>
                     <div className={`${tabletStyles.homeButton} ${utilStyles.button} ${utilStyles.round}`} />
                     <div className={profileStyles.userLayout}>
@@ -485,66 +520,57 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section3}`}>
-                  <div className={`${friendbookStyles.friendbook}`}>
-                    <div className={`${friendbookStyles.leftpage}`}>
-                      {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(dropMessageInLeftpage)}
-                      <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
-                        <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
-                        <div className={profileStyles.name}>Kenrick Halff</div>
-                        <div className={profileStyles.info}>
-                          <ul>
-                            <li>
-                              Birthday: November 5th 1993
-                            </li>
-                            <li>
-                              Favorite snack: Frikandel
-                            </li>
-                            <li>
-                              Catchphrase: That's life
-                            </li>                    
-                          </ul>
+                <div className={`${appCDStyles.section} ${appCDStyles.section3}`} {...(activeNavIndex !== 2) && {onClick:goToPage(2)}}>
+                  <div className={`${friendbookStyles.friendbook} ${friendbookIndex === 0 && friendbookStyles.closed}`}>
+                    {friendbookIndex === 0 ? (
+                      <div onClick={() => setFriendbookIndex(1)}>
+                      </div>
+                    ) : (
+                    <>
+                      <div className={`${friendbookStyles.leftpage}`}>
+                        {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(() => dropMessageInFriendpage(resetMessage))}
+                        <div className={profileStyles.friendLayout}>
+                          <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex - 1].foto})`}}></div>
+                          <div className={profileStyles.name}>{friendlist[friendbookIndex - 1].name}</div>
+                          <div className={profileStyles.info}>
+                            <ul>
+                            {Object.entries(friendlist[friendbookIndex - 1].info).map(entry => <li key={entry[0]}>{entry[0]}: {entry[1]}</li>)}                 
+                            </ul>
+                          </div>
+                          <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(prev => prev === 1 ? 0 : prev - 2)}></div>
                         </div>
                       </div>
-                    </div>
-                    <div className={`${friendbookStyles.rightpage}`}>
-                      {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(dropMessageInRightpage)}
-                      <div onDrop={(e) => drop(e, activeNavIndex, setNavRotation)} onDragOver={allowDrop} className={profileStyles.friendLayout}>
-                        <div className={profileStyles.foto} style={{backgroundImage: 'url("/images/profile/pf_Kenrick.jpg")'}}></div>
-                        <div className={profileStyles.name}>Kenrick Halff</div>
-                        <div className={profileStyles.info}>
-                          <ul>
-                            <li>
-                              Birthday: November 5th 1993
-                            </li>
-                            <li>
-                              Favorite snack: Frikandel
-                            </li>
-                            <li>
-                              Catchphrase: That's life
-                            </li>                    
-                          </ul>
+                      <div className={`${friendbookStyles.rightpage}`}>
+                        {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(() => dropMessageInFriendpage(resetMessage))}
+                        <div className={profileStyles.friendLayout}>
+                          <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex].foto})`}}></div>
+                          <div className={profileStyles.name}>{friendlist[friendbookIndex].name}</div>
+                          <div className={profileStyles.info}>
+                            <ul>
+                            {Object.entries(friendlist[friendbookIndex].info).map(entry => <li key={entry[0]}>{entry[0]}: {entry[1]}</li>)}                 
+                            </ul>
+                          </div>
+                          {friendbookIndex + 1 < friendlist.length && <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(prev => prev + 2)}></div>}
                         </div>
                       </div>
-                    </div>
+                    </>)}
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`} {...(activeNavIndex !== 3) && {onClick:goToPage(3)}}>
                   <ul className={`${writetoolsStyles.shapes}`}>
                       <li onClick={() => setMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
-                        {jarItems[0](paperColor)}
+                        {jarItems[MessageForm.STAR](paperColor)}
                       </li>
                       <li onClick={() => setMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
-                        {jarItems[1](paperColor)}
+                        {jarItems[MessageForm.HEART](paperColor)}
                       </li>
                       <li onClick={() => setMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
-                        {jarItems[2](paperColor)}
+                        {jarItems[MessageForm.CANDY](paperColor)}
                       </li>
                       <li onClick={() => setMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
-                        {jarItems[3](paperColor, pencilColor)}
+                        {jarItems[MessageForm.FLOWER](paperColor, pencilColor)}
                       </li>
                     </ul>
-                    {/*onClick={() => setMessageForm(MessageForm.UNFOLDED)}*/} 
                   {messageForm === MessageForm.UNFOLDED ? 
                     <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea}`}>
                       {renderMessage()}
@@ -574,8 +600,7 @@ export default function Home() {
               >
                 {
                   navItems.map((item: ReactSVGElement, i) => {
-                    const onClick = showNav ? (e: any) => { setActiveNavIndex(prevNav => calculateNavRotation(i, prevNav, setNavRotation)); stopEventProp(e)} : undefined;
-                    return <div key={"nav-" + (i+1)} onClick={onClick}>{item}</div>
+                    return <div key={"nav-" + (i+1)} {...showNav && {onClick:goToPage(i)}}>{item}</div>
                   })
                 }
                 </nav>

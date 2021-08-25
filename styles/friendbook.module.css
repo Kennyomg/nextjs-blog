@@ -9,7 +9,11 @@
     box-shadow: -2px 2px 1px rgba(0, 0, 0, 25%);
 }
 
-.friendbook::after {
+.friendbook.closed {
+    box-shadow: none;
+}
+
+.friendbook:not(.closed)::after {
     background: linear-gradient(to right, transparent 0%,rgba(0,0,0,0.2) 46%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.5) 51%,rgba(0,0,0,0.2) 52%,transparent 100%);
     bottom: 0;
     content: '';
@@ -20,6 +24,14 @@
     width: 4em;
     z-index: 1;
     max-height: 100%;
+}
+
+.closed > div {
+    width: 50%;
+    float: right;
+    height: 100%;
+    background-color: var(--color-1);
+    position: relative;
 }
 
 .leftpage {
@@ -36,4 +48,53 @@
     float: right;
     background-color: white;
     position: relative;
+}
+
+.dogEar {
+    width:0px;
+    height:0px;
+    border-top: transparent 25px solid; /*inside part*/
+    position:absolute;
+    bottom:0px;
+    right:0px;
+    cursor:pointer;
+}
+
+.dogEar:hover {
+    width:0px;
+    height:0px;
+    border-top: #09F 25px solid; /*inside part*/
+    position:absolute;
+    bottom:-1px;
+    right:-1px;
+}
+
+.leftpage .dogEar {
+    left: 0;
+    border-left: transparent 25px solid; /*outside part*/
+    -webkit-box-shadow: -3px 2px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: -3px 2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: -3px 2px 5px 0px rgba(0,0,0,0.2);
+}
+
+.leftpage .dogEar:hover {
+    border-left: white 25px solid; /*outside part*/
+    -webkit-box-shadow: 3px -2px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 3px -2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 3px -2px 5px 0px rgba(0,0,0,0.2);
+}
+
+.rightpage .dogEar {
+    right: 0;
+    border-right: transparent 25px solid; /*outside part*/
+    -webkit-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.2);
+}
+
+.rightpage .dogEar:hover {
+    border-right: white 25px solid; /*outside part*/
+    -webkit-box-shadow: -3px -2px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: -3px -2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: -3px -2px 5px 0px rgba(0,0,0,0.2);
 }
