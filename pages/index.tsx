@@ -1,8 +1,12 @@
 // Import functions
-import { ReactSVGElement, useState } from 'react'
+import { ReactSVGElement, useState, useEffect } from 'react'
+import Gun from 'gun/gun'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
 import tinycolor from 'tinycolor2'
+import _ from 'lodash'
+
+const gun = Gun()
 
 // Components
 import Head from 'next/head'
@@ -34,8 +38,6 @@ import { MessageForm } from '../constants/message'
 // import ProfileIcon from '../public/images/ProfileIcon.svg'
 // import BookIcon from '../public/images/BookIcon.svg'
 // import WriteMessageIcon from '../public/images/WriteMessageIcon.svg'
-
-
 
 const navItems = [
   // <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.0614 3.19685C24.0614 1.43128 22.6301 0 20.8645 0H5.13545C3.36988 0 1.9386 1.43128 1.9386 3.19685V5.92763C1.9386 6.18503 2.14726 6.3937 2.40467 6.3937C2.807 6.3937 3.02702 6.87539 2.7835 7.19565C1.04017 9.48833 0 12.3821 0 15.5276C0 22.9682 5.8203 29 13 29C20.1797 29 26 22.9682 26 15.5276C26 12.3821 24.9598 9.48833 23.2165 7.19565C22.973 6.87539 23.193 6.3937 23.5953 6.3937C23.8527 6.3937 24.0614 6.18503 24.0614 5.92763V3.19685Z"/></svg>,
@@ -75,6 +77,30 @@ const jarItems = {
   <circle cx="15" cy="16" r="6" fill={accentColor}/>
 </svg>)
 }
+
+interface Message {
+  messageForm: MessageForm,
+  messageText: string,
+  paperColor: string,
+  pencilColor: string
+}
+
+// const defaultJarMessages = Promise.allSettled([async () => {
+//   const promise = new Promise((resolve, reject) => {
+//     let messages = []
+//     gun.get('messages').map().once((data, key) => {
+//       console.log({key, data})
+//       messages.push(data)
+//     })
+//     resolve(messages)
+//   })
+
+//   return await promise.then(result => {
+//     return result
+//   });
+// }])
+
+
 
 const defaultFriendlist = [
   { 
@@ -215,8 +241,13 @@ function showDropMessageButton(messageForm: MessageForm, activeNavIndex: number,
 
 function dropMessageInJar(messageForm: MessageForm, messageText: string, paperColor: string, pencilColor: string, setJarItemList, resetMessage): void {
   // Drop message in jar
-  setJarItemList((prev: any) => [...prev, {messageForm, messageText, paperColor, pencilColor}])
+  // setJarItemList((prev: Set<Message>) => prev.add({messageForm, messageText, paperColor, pencilColor}))
+  
   // Save message to jar database
+  // const message = gun.get('message').put()
+  const messages = gun.get('messages')
+  messages.set({ messageForm, messageText, paperColor, pencilColor })
+
   // Show new paper at writingtools
   resetMessage()
 }
@@ -232,6 +263,8 @@ function dropMessageInWritingtools(setMessageForm) {
   // Unfold message
   setMessageForm(MessageForm.UNFOLDED)
 }
+
+// console.log(defaultJarMessages);
 
 export default function Home() {
   // Nav state
@@ -255,10 +288,38 @@ export default function Home() {
   const [ dragStartPosition, setDragStartPosition ] = useState(0)
   const [ dragPosition, setDragPosition ] = useState(0)
   // Jar state
-  const [ jarItemList, setJarItemList ] = useState([])
+  const [ jarItemList, setJarItemList ] = useState(new Set<Message>())
+  const [ hasInitialMessages, setHasInitialMessages] = useState(false)
+
   // Friendbook state
   const [ friendlist, setFriendlist ] = useState(defaultFriendlist)
   const [ friendbookIndex, setFriendbookIndex ] = useState(0)
+
+  // const messages = gun.get('messages')
+
+  useEffect(() => {
+    if (!hasInitialMessages) {
+      // let messages = new Set<Message>()
+      gun.get('messages').map().once(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
+        const message: Message = { messageForm, messageText, paperColor, pencilColor }
+        console.log({key, message, jarItemList})
+        // messages.add(message)
+        setJarItemList(prev => new Set<Message>(_.uniqWith([...Array.from(prev), message], _.isEqual)))
+      }, {wait: 0})
+
+      setHasInitialMessages(true)
+    }
+      // } else {
+    //   gun.get('messages').map().once(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
+    //     const message: Message = { messageForm, messageText, paperColor, pencilColor }
+    //     if (jarItemList && !jarItemList.has(message)) {
+    //       console.log({key, message, jarItemList})
+    //       setJarItemList(prev => new Set<Message>(_.uniqWith(prev.add(message), _.isEqual)))
+    //     }
+    //   })
+    // }
+    
+  })
 
   // Drag behaviour for message drag navigation
   let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
@@ -424,7 +485,7 @@ export default function Home() {
                     </div>
                     <ul className={jarStyles.itemList}>
                       {
-                        jarItemList.map((item, index) =>(
+                        Array.from(jarItemList).map((item, index) =>(
                           <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[item.messageForm]}`}>
                             {jarItems[item.messageForm](item.paperColor, item.pencilColor)}
                           </li>
