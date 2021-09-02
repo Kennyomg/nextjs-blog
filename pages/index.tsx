@@ -1,12 +1,14 @@
 // Import functions
-import { ReactSVGElement, useState, useEffect } from 'react'
+import { ReactSVGElement, useState, useEffect, SetStateAction, Dispatch } from 'react'
 import Gun from 'gun/gun'
+import 'gun/sea'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
 import { useMorph } from 'react-morph'
 import tinycolor from 'tinycolor2'
 import _ from 'lodash'
 
 const gun = Gun()
+const user = gun.user()
 
 // Components
 import Head from 'next/head'
@@ -85,6 +87,17 @@ interface Message {
   pencilColor: string
 }
 
+interface FormProps {
+  name: string,
+  fields: FormField[]
+}
+
+interface FormField {
+  name: string,
+  value: string,
+  setter: Dispatch<SetStateAction<string>>
+}
+
 // const defaultJarMessages = Promise.allSettled([async () => {
 //   const promise = new Promise((resolve, reject) => {
 //     let messages = []
@@ -99,8 +112,6 @@ interface Message {
 //     return result
 //   });
 // }])
-
-
 
 const defaultFriendlist = [
   { 
@@ -135,8 +146,15 @@ const defaultFriendlist = [
   }
 ]
 
-const dropMessageButton = (onClick) => <div onClick={onClick} className={appCDStyles.dropMessage}>&#x21E9;</div>
+const DropMessageButton = ({ onClick }) => <div className={appCDStyles.dropMessage} onClick={onClick}>&#x21E9;</div>
 
+const Form = ({ fields, name }: FormProps)  => (
+  <div>
+    {fields.map((field, index) => 
+      <input key={name+index} name={field.name} type="text" defaultValue={field.value} onChange={(e) => field.setter(e.currentTarget.value)} />
+    )}
+  </div>
+)
 
 function getClientPos(e: any) {
   return {
@@ -245,7 +263,7 @@ function dropMessageInJar(messageForm: MessageForm, messageText: string, paperCo
   
   // Save message to jar database
   // const message = gun.get('message').put()
-  const messages = gun.get('messages')
+  const messages = user.get('messages')
   messages.set({ messageForm, messageText, paperColor, pencilColor })
 
   // Show new paper at writingtools
@@ -271,11 +289,21 @@ export default function Home() {
   const [ showNav, setShowNav ] = useState(false)
   const [ activeNavIndex, setActiveNavIndex ] = useState(0)
   const [ navRotation, setNavRotation ] = useState(0)
+  
   // Loginscreen state
   const [ loggedIn, setLoggedIn ] = useState(false)
   const [ showRegisterForm, setShowRegisterForm ] = useState(false)
   const [ showLoginForm, setShowLoginForm ] = useState(false)
   const [ showLetter, setShowLetter ] = useState(false)
+
+  // Login form state
+  const [ loginFormUser, setLoginFormUser ] = useState('')
+  const [ loginFormPass, setLoginFormPass ] = useState('')
+  
+  // Register form state
+  const [ registerFormUser, setRegisterFormUser ] = useState('')
+  const [ registerFormPass, setRegisterFormPass ] = useState('')
+
   // Writingtools state
   const [ pencilColor, setPencilColor ] = useState("#2ae6dc")
   const [ paperColor, setPaperColor ] = useState("#1b2f85")
@@ -283,11 +311,13 @@ export default function Home() {
   const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
   const [ messageText, setMessageText ] = useState("")
   const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
+  
   // Message dragging state 
   const [ isDragging, setIsDragging ] = useState(false)
   const [ dragStartPosition, setDragStartPosition ] = useState(0)
   const [ dragPosition, setDragPosition ] = useState(0)
   // Jar state
+  
   const [ jarItemList, setJarItemList ] = useState(new Set<Message>())
   const [ hasInitialMessages, setHasInitialMessages] = useState(false)
 
@@ -298,17 +328,19 @@ export default function Home() {
   // const messages = gun.get('messages')
 
   useEffect(() => {
-    if (!hasInitialMessages) {
+    // if (!hasInitialMessages) {
       // let messages = new Set<Message>()
-      gun.get('messages').map().once(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
-        const message: Message = { messageForm, messageText, paperColor, pencilColor }
-        console.log({key, message, jarItemList})
-        // messages.add(message)
-        setJarItemList(prev => new Set<Message>(_.uniqWith([...Array.from(prev), message], _.isEqual)))
-      }, {wait: 0})
+      if (user.is) {
+        user.get('messages').map().on(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
+          const message: Message = { messageForm, messageText, paperColor, pencilColor }
+          console.log({key, message, jarItemList})
+          // messages.add(message)
+          setJarItemList(prev => new Set<Message>(_.uniqWith([...Array.from(prev), message], _.isEqual)))
+        }, true)
+      }
 
-      setHasInitialMessages(true)
-    }
+      // setHasInitialMessages(true)
+    // }
       // } else {
     //   gun.get('messages').map().once(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
     //     const message: Message = { messageForm, messageText, paperColor, pencilColor }
@@ -319,7 +351,39 @@ export default function Home() {
     //   })
     // }
     
-  })
+  }, [user.is])
+
+  const loginFormProps: FormProps = {
+    name: 'loginForm',
+    fields: [
+      {
+        name: 'username',
+        value: loginFormUser,
+        setter: setLoginFormUser
+      },
+      {
+        name: 'password',
+        value: loginFormPass,
+        setter: setLoginFormPass
+      }
+    ]
+  }
+
+  const registerFormProps: FormProps = {
+    name: 'registerForm',
+    fields: [
+      {
+        name: 'username',
+        value: registerFormUser,
+        setter: setRegisterFormUser
+      },
+      {
+        name: 'password',
+        value: registerFormPass,
+        setter: setRegisterFormPass
+      }
+    ]
+  }
 
   // Drag behaviour for message drag navigation
   let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
@@ -418,7 +482,7 @@ export default function Home() {
       { showPencilColorPicker && ( <HexColorPicker color={pencilColor} onChange={setPencilColor}/> ) }
       { showPaperColorPicker && ( <HexColorPicker color={paperColor} onChange={setPaperColor}/> ) }
       {
-        loggedIn ? (
+        user.is ? (
           <>
             {messageForm !== MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea} ${writetoolsStyles.folded}`}>
                   {renderMessage()}
@@ -439,7 +503,7 @@ export default function Home() {
               <div className={appCDStyles.cdBg}>
                 <div className={`${appCDStyles.section} ${appCDStyles.section1}`} {...(activeNavIndex !== 0) && {onClick:goToPage(0)}}>
                   <div className={`${jarStyles.jar}`}>
-                    {showDropMessageButton(messageForm, activeNavIndex, 0) && dropMessageButton(() => dropMessageInJar(messageForm, messageText, paperColor, pencilColor, setJarItemList, resetMessage))}
+                    {showDropMessageButton(messageForm, activeNavIndex, 0) && <DropMessageButton onClick={() => dropMessageInJar(messageForm, messageText, paperColor, pencilColor, setJarItemList, resetMessage)}/>}
                     <div className={jarStyles.bottom}>
                       <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_biiii)">
@@ -589,7 +653,7 @@ export default function Home() {
                     ) : (
                     <>
                       <div className={`${friendbookStyles.leftpage}`}>
-                        {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(() => dropMessageInFriendpage(resetMessage))}
+                        {showDropMessageButton(messageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
                         <div className={profileStyles.friendLayout}>
                           <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex - 1].foto})`}}></div>
                           <div className={profileStyles.name}>{friendlist[friendbookIndex - 1].name}</div>
@@ -602,7 +666,7 @@ export default function Home() {
                         </div>
                       </div>
                       <div className={`${friendbookStyles.rightpage}`}>
-                        {showDropMessageButton(messageForm, activeNavIndex, 2) && dropMessageButton(() => dropMessageInFriendpage(resetMessage))}
+                        {showDropMessageButton(messageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
                         <div className={profileStyles.friendLayout}>
                           <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex].foto})`}}></div>
                           <div className={profileStyles.name}>{friendlist[friendbookIndex].name}</div>
@@ -637,7 +701,7 @@ export default function Home() {
                       {renderMessage()}
                     </div> 
                     :
-                    showDropMessageButton(messageForm, activeNavIndex, 3) && dropMessageButton(() => dropMessageInWritingtools(setMessageForm))
+                    showDropMessageButton(messageForm, activeNavIndex, 3) && <DropMessageButton onClick={() => dropMessageInWritingtools(setMessageForm)}/>
                   }
                   <div className={`${writetoolsStyles.pencil}`}>
                     <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="100%" height="100%" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -668,7 +732,8 @@ export default function Home() {
             </div>
           </>
         ) : (
-          <div onClick={_ => {
+          <div onClick={e => {
+            stopEventProp(e)
             if (showLoginForm) {
               setShowLoginForm(false)
             }
@@ -679,15 +744,22 @@ export default function Home() {
               setShowLetter(false)
             }
           }} style={{width: '100vw', height: '100vh', position: 'absolute'}}>
-            <div>
+            <div onClick={stopEventProp}>
                 <div className={
                   `${startCDStyles.startCD} ${appCDStyles.cd}
                   ${(showLoginForm || showRegisterForm) && startCDStyles.showForm }`
                 }>
                   <div onClick={_ => setShowLoginForm(true)} className={`${startCDStyles.loginButton}`}>Login</div>
-                  {(showLoginForm || showRegisterForm) ?
-                    <div onClick={_ => setLoggedIn(true)} className={`${startCDStyles.middleSeparator} ${startCDStyles.submitButton} ${showLoginForm && startCDStyles.loginSubmit} ${showRegisterForm && startCDStyles.registerSubmit}`}>Submit</div>
-                    :
+                  {(showLoginForm || showRegisterForm) ? (
+                    <div>
+                      <Form {...(showLoginForm && loginFormProps || showRegisterForm && registerFormProps)} />
+                      <div 
+                        onClick={showLoginForm && (_ => user.auth(loginFormUser, loginFormPass)) || showRegisterForm && (_ => user.create(registerFormUser, registerFormPass)) } 
+                        className={`${startCDStyles.middleSeparator} ${startCDStyles.submitButton} ${showLoginForm && startCDStyles.loginSubmit} ${showRegisterForm && startCDStyles.registerSubmit}`}>
+                          Submit
+                      </div>
+                    </div>
+                  ) :
                     <div className={`${startCDStyles.middleSeparator}`}></div>
                   }
                   <div onClick={_ => setShowRegisterForm(true)} className={`${startCDStyles.registerButton}`}>Register</div>
