@@ -7,9 +7,6 @@ import { useMorph } from 'react-morph'
 import tinycolor from 'tinycolor2'
 import _ from 'lodash'
 
-const gun = Gun()
-const user = gun.user()
-
 // Components
 import Head from 'next/head'
 // import Link from 'next/link'
@@ -33,6 +30,7 @@ import profileStyles from '../styles/profile.module.css'
 
 // Constants
 import { MessageForm } from '../constants/message'
+import { IGunChainReference } from 'gun/types/chain'
 // import { DragItemTypes } from '../constants/dragItemTypes'
 
 // Images
@@ -97,6 +95,13 @@ interface FormField {
   value: string,
   setter: Dispatch<SetStateAction<string>>
 }
+
+interface GunUser extends IGunChainReference<Record<string, any>, any, false> {
+  is?: boolean | undefined
+}
+
+const gun = Gun()
+const user: GunUser = gun.user()
 
 // const defaultJarMessages = Promise.allSettled([async () => {
 //   const promise = new Promise((resolve, reject) => {
