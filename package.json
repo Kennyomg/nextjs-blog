@@ -3,16 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
-    "build": "next dev -p 1337",
-    "real_build": "next build",
+    "dev": "next dev -p 1337",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@builder.io/react": "^1.1.42",
     "date-fns": "^2.19.0",
-    "express": "^4.17.1",
-    "faunadb": "^4.1.2",
     "gray-matter": "^4.0.2",
     "gun": "^0.2020.1234",
     "lodash": "^4.17.21",

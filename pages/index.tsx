@@ -102,7 +102,7 @@ interface GunUser extends IGunChainReference<Record<string, any>, any, false> {
   is?: boolean | undefined
 }
 
-const gun = Gun('http://localhost:8765/gun')
+const gun = Gun('http://gunjs.herokuapp.com/gun')
 const user: GunUser = gun.user()
 
 // const defaultJarMessages = Promise.allSettled([async () => {
