@@ -30,8 +30,10 @@ import profileStyles from '../styles/profile.module.css'
 
 // Constants
 import { MessageForm } from '../constants/message'
-import { IGunChainReference } from 'gun/types/chain'
 // import { DragItemTypes } from '../constants/dragItemTypes'
+
+// Types
+import { IGunChainReference } from 'gun/types/chain'
 
 // Images
 // import JarIcon from '../public/images/jarIcon.svg'
@@ -100,7 +102,7 @@ interface GunUser extends IGunChainReference<Record<string, any>, any, false> {
   is?: boolean | undefined
 }
 
-const gun = Gun()
+const gun = Gun('http://localhost:8765/gun')
 const user: GunUser = gun.user()
 
 // const defaultJarMessages = Promise.allSettled([async () => {
