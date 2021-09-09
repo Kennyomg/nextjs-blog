@@ -291,6 +291,23 @@ function dropMessageInWritingtools(setMessageForm) {
 
 // console.log(defaultJarMessages);
 
+// Render Pencil
+const renderPencil = (pencilColor, showPencilColorPicker, setShowPencilColorPicker) => (
+  <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="100%" height="100%" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
+    <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
+    <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
+    <path d="M6.10352e-05 1.00005L9.00006 0V130L6.10352e-05 129V1.00005Z" fill="#C3711E"/>
+    <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
+    <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
+    <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
+    <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill={pencilColor}/>
+    <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill={tinycolor(pencilColor).lighten(10).toString()}/>
+    <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill={tinycolor(pencilColor).darken(10).toString()}/>
+  </svg>
+)
+
+
 export default function Home() {
   // Nav state
   const [ showNav, setShowNav ] = useState(false)
@@ -711,18 +728,7 @@ export default function Home() {
                     showDropMessageButton(messageForm, activeNavIndex, 3) && <DropMessageButton onClick={() => dropMessageInWritingtools(setMessageForm)}/>
                   }
                   <div className={`${writetoolsStyles.pencil}`}>
-                    <svg onClick={() => setShowPencilColorPicker(!showPencilColorPicker)} width="100%" height="100%" viewBox="0 0 30 155" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="6.10352e-05" y="1" width="30" height="128" fill="#C4C4C4"/>
-                      <rect x="9.00006" width="12" height="130" fill="#FF9201"/>
-                      <path d="M21.0001 0L30.0001 0.999934V129L21.0001 130V0Z" fill="#FEA950"/>
-                      <path d="M6.10352e-05 1.00005L9.00006 0V130L6.10352e-05 129V1.00005Z" fill="#C3711E"/>
-                      <path d="M15.0001 155L0.500055 130L29.5001 130L15.0001 155Z" fill="#DEBFAB"/>
-                      <path d="M15.0001 155L21.0001 130L30.0001 129L15.0001 155Z" fill="#E3C6B4"/>
-                      <path d="M15 155L2.63372e-05 129L9.00006 130L15 155Z" fill="#BC9574"/>
-                      <path d="M15 155L8.00006 143.028L11.8828 142.03L18.1133 142.03L22.0001 143.028L15 155Z" fill={pencilColor}/>
-                      <path d="M14.9999 155L18.11 142.03L22 143.028L14.9999 155Z" fill={tinycolor(pencilColor).lighten(10).toString()}/>
-                      <path d="M14.9999 155L8 143L11.88 142.03L14.9999 155Z" fill={tinycolor(pencilColor).darken(10).toString()}/>
-                    </svg>
+                    {renderPencil(pencilColor, showPencilColorPicker, setShowPencilColorPicker)}
                   </div>
                 </div>
               </div>
