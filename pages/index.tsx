@@ -1,5 +1,5 @@
 // Import functions
-import { ReactSVGElement, useState, useEffect, SetStateAction, Dispatch } from 'react'
+import React, { ReactSVGElement, useState, useEffect, SetStateAction, Dispatch } from 'react'
 import Gun from 'gun/gun'
 import 'gun/sea'
 import { isLocalURL } from 'next/dist/next-server/lib/router/router'
@@ -153,6 +153,15 @@ const defaultFriendlist = [
   }
 ]
 
+const defaultMessage: Message = {
+  messageForm: MessageForm.UNFOLDED,
+  messageText: "Thank you for being in my life",
+  paperColor: "#1b2f85",
+  pencilColor: "#2ae6dc"
+}
+
+const toggle = (b: boolean) => !b
+
 const DropMessageButton = ({ onClick }) => <div className={appCDStyles.dropMessage} onClick={onClick}>&#x21E9;</div>
 
 const Form = ({ fields, name }: FormProps)  => (
@@ -163,6 +172,7 @@ const Form = ({ fields, name }: FormProps)  => (
   </div>
 )
 
+// Functions for navigation and dragging
 function getClientPos(e: any) {
   return {
     clientX: e.clientX | parseInt(e.changedTouches && e.changedTouches[0].clientX, 10),
@@ -276,6 +286,7 @@ function dropMessageInJar(messageForm: MessageForm, messageText: string, paperCo
   // Show new paper at writingtools
   resetMessage()
 }
+
 function dropMessageInFriendpage(resetMessage) {
   // Drop message in jar on Friendpage
   // Send message to Friendpage contact
@@ -289,7 +300,16 @@ function dropMessageInWritingtools(setMessageForm) {
   setMessageForm(MessageForm.UNFOLDED)
 }
 
-// console.log(defaultJarMessages);
+// Decide font-size class for message
+const getMessageSizeClass = (messageText: string) => {
+  if (messageText.split(/\r\n|\r|\n/).length < 3) {
+    return 'large'
+  } else if (messageText.split(/\r\n|\r|\n/).length < 5) {
+    return 'medium'
+  } else {
+    return 'small'
+  }
+}
 
 // Render Pencil
 const renderPencil = (pencilColor, showPencilColorPicker, setShowPencilColorPicker) => (
@@ -307,6 +327,142 @@ const renderPencil = (pencilColor, showPencilColorPicker, setShowPencilColorPick
   </svg>
 )
 
+const renderJarBottom = () => (
+  <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter0_biiii)">
+      <circle cx="37" cy="37" r="37" fill="#C4C4C4" fillOpacity="0.109"/>
+    </g>
+    <defs>
+      <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+        <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+        <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="-4.32" dy="4.32"/>
+        <feGaussianBlur stdDeviation="2.16"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="-2.16" dy="2.16"/>
+        <feGaussianBlur stdDeviation="1.08"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="4.32" dy="-4.32"/>
+        <feGaussianBlur stdDeviation="2.16"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="2.16" dy="-2.16"/>
+        <feGaussianBlur stdDeviation="1.08"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+      </filter>
+    </defs>
+  </svg>
+)
+
+const renderJarRim = () => (
+  <svg width="100%" height="100%" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter1_biiii)">
+      <path fillRule="evenodd" clipRule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fillOpacity="0.109"/>
+    </g>
+    <defs>
+      <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+        <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
+        <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="-4.32" dy="4.32"/>
+        <feGaussianBlur stdDeviation="2.16"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="-2.16" dy="2.16"/>
+        <feGaussianBlur stdDeviation="1.08"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="4.32" dy="-4.32"/>
+        <feGaussianBlur stdDeviation="2.16"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
+
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="2.16" dy="-2.16"/>
+        <feGaussianBlur stdDeviation="1.08"/>
+        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
+        <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+      </filter>
+    </defs>
+  </svg>
+)
+
+
+// Message render logic
+// TODO: Make generic and use for messages in jar and new message
+const renderMessage = (message: Message, getMessageSizeClass?, setShowPaperColorPicker?, setNewMessageText?, messageDragProps?) => {
+  switch(message.messageForm) {
+    case MessageForm.UNFOLDED:
+      return (<>
+        <svg width="100%" height="100%" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg" {...(messageDragProps?.onClick && messageDragProps)}>
+          <path fillRule="evenodd" clipRule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={message.paperColor}/>
+          <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
+            <path {...(setShowPaperColorPicker && {onClick: () => setShowPaperColorPicker(toggle)})} d="M2 22H22V2L2 22Z" fill={message.paperColor}/>
+          </g>
+          <defs>
+            <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset/>
+              <feGaussianBlur stdDeviation="1"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+            </filter>
+          </defs>
+        </svg>
+        <div className={writetoolsStyles.textareaWrapper}>
+          {
+            setNewMessageText ? (
+              <>
+                <div className={writetoolsStyles.pullTab} />
+                <textarea className={getMessageSizeClass(message.messageText)} style={{color: message.pencilColor}} onChange={(e) => setNewMessageText(e.target.value)} value={message.messageText} />
+              </>
+            ) : <span style={{color: message.pencilColor}}>{message.messageText}</span>
+          }
+        </div>
+      </>)
+      break;
+    case MessageForm.FLOWER:
+      return (<div {...messageDragProps }>{jarItems[message.messageForm](message.paperColor, message.pencilColor)}</div>);
+      break;
+    default:
+      return (<div {...messageDragProps }>{jarItems[message.messageForm](message.paperColor)}</div>);
+      break;
+  }
+}
+
+// Friendbook interactions
+const friendBookPageBack = prev => prev === 1 ? 0 : prev - 2
+const friendBookPageForward = prev => prev + 2
 
 export default function Home() {
   // Nav state
@@ -329,12 +485,15 @@ export default function Home() {
   const [ registerFormPass, setRegisterFormPass ] = useState('')
 
   // Writingtools state
-  const [ pencilColor, setPencilColor ] = useState("#2ae6dc")
-  const [ paperColor, setPaperColor ] = useState("#1b2f85")
   const [ showPencilColorPicker, setShowPencilColorPicker ] = useState(false)
   const [ showPaperColorPicker, setShowPaperColorPicker ] = useState(false)
-  const [ messageText, setMessageText ] = useState("")
-  const [ messageForm, setMessageForm ] = useState<MessageForm>(MessageForm.UNFOLDED)
+  const [ pencilColor, setPencilColor ] = useState(defaultMessage.pencilColor)
+  const [ paperColor, setPaperColor ] = useState(defaultMessage.paperColor)
+  const [ newMessageText, setNewMessageText ] = useState(defaultMessage.messageText)
+  const [ newMessageForm, setNewMessageForm ] = useState<MessageForm>(defaultMessage.messageForm)
+
+  // Read message state
+  const [ selectedMessage, setSelectedMessage ] = useState<Message>(null)
   
   // Message dragging state 
   const [ isDragging, setIsDragging ] = useState(false)
@@ -354,7 +513,9 @@ export default function Home() {
   useEffect(() => {
     // if (!hasInitialMessages) {
       // let messages = new Set<Message>()
+      console.log("hi from effect")
       if (user.is) {
+        console.log("Effect acknowledges you're logged in")
         user.get('messages').map().on(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
           const message: Message = { messageForm, messageText, paperColor, pencilColor }
           console.log({key, message, jarItemList})
@@ -409,6 +570,13 @@ export default function Home() {
     ]
   }
 
+  const newMessage: Message = {
+    messageForm: newMessageForm,
+    messageText: newMessageText,
+    paperColor,
+    pencilColor
+  }
+
   // Drag behaviour for message drag navigation
   let dragDistance = dragPosition ? dragPosition - dragStartPosition : 0;
   if (isDragging && dragDistance > 100) {
@@ -428,55 +596,27 @@ export default function Home() {
     setDragStartPosition(0)
     setIsDragging(false)
   }
+  
+  const startDragHandler = (e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)
+  const draggingHandler = (e) => isDragging && dragging(e, setDragPosition)
+  const stopDragHandler = (e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)
 
-  // Message render logic
-  // TODO: Make generic and use for messages in jar and new message
-  const renderMessage = () => {
-    switch(messageForm) {
-      case MessageForm.UNFOLDED:
-        return (<>
-          <svg width="100%" height="100%" viewBox="0 0 192 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" clipRule="evenodd" d="M192 2H22L2 22V102H192V2Z" fill={paperColor}/>
-            <g className={writetoolsStyles.dogEar} filter="url(#msg_filter0_d)">
-              <path onClick={() => setShowPaperColorPicker(!showPaperColorPicker)} d="M2 22H22V2L2 22Z" fill={paperColor}/>
-            </g>
-            <defs>
-              <filter id="msg_filter0_d" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset/>
-                <feGaussianBlur stdDeviation="1"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-              </filter>
-            </defs>
-          </svg>
-          <div className={writetoolsStyles.textareaWrapper}>
-            <div className={writetoolsStyles.pullTab} />
-            <textarea className={messageSizeClass} style={{color: pencilColor}} onChange={(e) => setMessageText(e.target.value)} value={messageText} />
-          </div>
-        </>)
-        break;
-      case MessageForm.STAR:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
-        break;
-      case MessageForm.HEART:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
-        break;
-      case MessageForm.CANDY:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor)}</div>);
-        break;
-      case MessageForm.FLOWER:
-        return (<div draggable="false" style={{ left: `${isDragging ? dragDistance : 0}px` }} onMouseDown={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchMove={(e) => isDragging && dragging(e, setDragPosition)} onTouchStart={(e) => dragStart(e, setIsDragging, setDragStartPosition, setDragPosition)} onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>{jarItems[messageForm](paperColor, pencilColor)}</div>);
-        break;
-    }
+  const messageDragProps = {
+    draggable: "false",
+    style: { left: `${isDragging ? dragDistance : 0}px` },
+    onMouseDown: startDragHandler,
+    onTouchStart: startDragHandler,
+    onMouseMove: draggingHandler, 
+    onTouchMove: draggingHandler,
+    onMouseUp: stopDragHandler,
+    onTouchEnd: stopDragHandler
   }
+
 
   // Reset the message state
   const resetMessage = () => {
-    setMessageForm(MessageForm.UNFOLDED)
-    setMessageText("")
+    setNewMessageForm(MessageForm.UNFOLDED)
+    setNewMessageText("")
   }
   
   // Navigate to CD section
@@ -485,13 +625,8 @@ export default function Home() {
     setActiveNavIndex(prevNav => calculateNavRotation(pageIndex, prevNav, setNavRotation))
   }
 
-  // Decide font-size class for message
-  let messageSizeClass = 'small'
-  if (messageText.split(/\r\n|\r|\n/).length < 3) {
-    messageSizeClass = 'large'
-  } else if (messageText.split(/\r\n|\r|\n/).length < 5) {
-    messageSizeClass = 'medium'
-  }
+  const gotToPageIfInactive = (index: number) => (activeNavIndex !== index) && {onClick:goToPage(index)}
+  console.log({selectedMessage})
 
   return (
     <Layout>
@@ -508,9 +643,10 @@ export default function Home() {
       {
         user.is ? (
           <>
-            {messageForm !== MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea} ${writetoolsStyles.folded}`}>
-                  {renderMessage()}
+            {newMessage.messageForm !== MessageForm.UNFOLDED && <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea} ${writetoolsStyles.folded}`}>
+                  {renderMessage(newMessage, null, null, null, messageDragProps)}
             </div>}
+            
             <div
               className={
                 `${appCDStyles.cd} 
@@ -523,109 +659,35 @@ export default function Home() {
                 if (showPaperColorPicker) setShowPaperColorPicker(false)
                 if (showPencilColorPicker) setShowPencilColorPicker(false)
               }}
-              onMouseUp={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)} onTouchEnd={(e) => isDragging && dragEnd(e, setIsDragging, setDragStartPosition, setDragPosition)}>
+              onMouseUp={stopDragHandler} onTouchEnd={stopDragHandler}>
               <div className={appCDStyles.cdBg}>
-                <div className={`${appCDStyles.section} ${appCDStyles.section1}`} {...(activeNavIndex !== 0) && {onClick:goToPage(0)}}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section1}`} {...gotToPageIfInactive(0)}>
+                  {selectedMessage && (
+                    <div className={`${jarStyles.message}`}>
+                      {renderMessage({...selectedMessage, messageForm: MessageForm.UNFOLDED}, getMessageSizeClass, null, null, {onClick: () => setSelectedMessage(null)})}
+                    </div>
+                  )}
                   <div className={`${jarStyles.jar}`}>
-                    {showDropMessageButton(messageForm, activeNavIndex, 0) && <DropMessageButton onClick={() => dropMessageInJar(messageForm, messageText, paperColor, pencilColor, setJarItemList, resetMessage)}/>}
+                    {showDropMessageButton(newMessageForm, activeNavIndex, 0) && <DropMessageButton onClick={() => dropMessageInJar(newMessageForm, newMessageText, paperColor, pencilColor, setJarItemList, resetMessage)}/>}
                     <div className={jarStyles.bottom}>
-                      <svg width="100%" height="100%" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g filter="url(#filter0_biiii)">
-                          <circle cx="37" cy="37" r="37" fill="#C4C4C4" fillOpacity="0.109"/>
-                        </g>
-                        <defs>
-                          <filter id="filter0_biiii" x="-12.528" y="-12.528" width="99.056" height="99.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                            <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
-                            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="-4.32" dy="4.32"/>
-                            <feGaussianBlur stdDeviation="2.16"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="-2.16" dy="2.16"/>
-                            <feGaussianBlur stdDeviation="1.08"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="4.32" dy="-4.32"/>
-                            <feGaussianBlur stdDeviation="2.16"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="2.16" dy="-2.16"/>
-                            <feGaussianBlur stdDeviation="1.08"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
-                          </filter>
-                        </defs>
-                      </svg>
+                      {renderJarBottom()}
                     </div>
                     <ul className={jarStyles.itemList}>
                       {
-                        Array.from(jarItemList).map((item, index) =>(
+                        Array.from(jarItemList).filter(x => x !== selectedMessage).map((item, index) => (
                           <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[item.messageForm]}`}>
-                            {jarItems[item.messageForm](item.paperColor, item.pencilColor)}
+                            {/* {jarItems[item.messageForm](item.paperColor, item.pencilColor)} */}
+                            { renderMessage(item, null, null, null, {onClick: () => setSelectedMessage(item)}) }
                           </li>
                         ))
                       }
                     </ul>
                     <div className={jarStyles.rim}>
-                      <svg width="100%" height="100%" viewBox="0 0 227 227" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g filter="url(#filter1_biiii)">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M113.5 227C176.184 227 227 176.184 227 113.5C227 50.8157 176.184 0 113.5 0C50.8157 0 0 50.8157 0 113.5C0 176.184 50.8157 227 113.5 227ZM113 195C157.735 195 194 158.735 194 114C194 69.2649 157.735 33 113 33C68.2649 33 32 69.2649 32 114C32 158.735 68.2649 195 113 195Z" fill="#C4C4C4" fillOpacity="0.109"/>
-                        </g>
-                        <defs>
-                          <filter id="filter1_biiii" x="-12.528" y="-12.528" width="252.056" height="252.056" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                            <feGaussianBlur in="BackgroundImage" stdDeviation="6.264"/>
-                            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="-4.32" dy="4.32"/>
-                            <feGaussianBlur stdDeviation="2.16"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="-2.16" dy="2.16"/>
-                            <feGaussianBlur stdDeviation="1.08"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="4.32" dy="-4.32"/>
-                            <feGaussianBlur stdDeviation="2.16"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
-
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="2.16" dy="-2.16"/>
-                            <feGaussianBlur stdDeviation="1.08"/>
-                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0 0.614902 0 0 0 0.418 0"/>
-                            <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
-                          </filter>
-                        </defs>
-                      </svg>
+                      {renderJarRim()}
                     </div>
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section2}`} {...(activeNavIndex !== 1) && {onClick:goToPage(1)}}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section2}`} {...gotToPageIfInactive(1)}>
                   <div className={`${tabletStyles.tablet}`}>
                     <div className={`${tabletStyles.homeButton} ${utilStyles.button} ${utilStyles.round}`} />
                     <div className={profileStyles.userLayout}>
@@ -669,7 +731,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section3}`} {...(activeNavIndex !== 2) && {onClick:goToPage(2)}}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section3}`} {...gotToPageIfInactive(2)}>
                   <div className={`${friendbookStyles.friendbook} ${friendbookIndex === 0 && friendbookStyles.closed}`}>
                     {friendbookIndex === 0 ? (
                       <div onClick={() => setFriendbookIndex(1)}>
@@ -677,7 +739,7 @@ export default function Home() {
                     ) : (
                     <>
                       <div className={`${friendbookStyles.leftpage}`}>
-                        {showDropMessageButton(messageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
+                        {showDropMessageButton(newMessageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
                         <div className={profileStyles.friendLayout}>
                           <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex - 1].foto})`}}></div>
                           <div className={profileStyles.name}>{friendlist[friendbookIndex - 1].name}</div>
@@ -686,11 +748,11 @@ export default function Home() {
                             {Object.entries(friendlist[friendbookIndex - 1].info).map(entry => <li key={entry[0]}>{entry[0]}: {entry[1]}</li>)}                 
                             </ul>
                           </div>
-                          <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(prev => prev === 1 ? 0 : prev - 2)}></div>
+                          <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(friendBookPageBack)}></div>
                         </div>
                       </div>
                       <div className={`${friendbookStyles.rightpage}`}>
-                        {showDropMessageButton(messageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
+                        {showDropMessageButton(newMessageForm, activeNavIndex, 2) && <DropMessageButton onClick={() => dropMessageInFriendpage(resetMessage)}/>}
                         <div className={profileStyles.friendLayout}>
                           <div className={profileStyles.foto} style={{backgroundImage: `url(${friendlist[friendbookIndex].foto})`}}></div>
                           <div className={profileStyles.name}>{friendlist[friendbookIndex].name}</div>
@@ -699,33 +761,33 @@ export default function Home() {
                             {Object.entries(friendlist[friendbookIndex].info).map(entry => <li key={entry[0]}>{entry[0]}: {entry[1]}</li>)}                 
                             </ul>
                           </div>
-                          {friendbookIndex + 1 < friendlist.length && <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(prev => prev + 2)}></div>}
+                          {friendbookIndex + 1 < friendlist.length && <div className={friendbookStyles.dogEar} onClick={() => setFriendbookIndex(friendBookPageForward)}></div>}
                         </div>
                       </div>
                     </>)}
                   </div>
                 </div>
-                <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`} {...(activeNavIndex !== 3) && {onClick:goToPage(3)}}>
+                <div className={`${appCDStyles.section} ${appCDStyles.section4} ${writetoolsStyles.layout}`} {...gotToPageIfInactive(3)}>
                   <ul className={`${writetoolsStyles.shapes}`}>
-                      <li onClick={() => setMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
+                      <li onClick={() => setNewMessageForm(MessageForm.STAR)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.star}`}>
                         {jarItems[MessageForm.STAR](paperColor)}
                       </li>
-                      <li onClick={() => setMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
+                      <li onClick={() => setNewMessageForm(MessageForm.HEART)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.heart}`}>
                         {jarItems[MessageForm.HEART](paperColor)}
                       </li>
-                      <li onClick={() => setMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
+                      <li onClick={() => setNewMessageForm(MessageForm.CANDY)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.candy}`}>
                         {jarItems[MessageForm.CANDY](paperColor)}
                       </li>
-                      <li onClick={() => setMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
+                      <li onClick={() => setNewMessageForm(MessageForm.FLOWER)} className={`${jarStyles.item} ${writetoolsStyles.shape} ${messageStyles.flower}`}>
                         {jarItems[MessageForm.FLOWER](paperColor, pencilColor)}
                       </li>
                     </ul>
-                  {messageForm === MessageForm.UNFOLDED ? 
+                  {newMessageForm === MessageForm.UNFOLDED ? 
                     <div className={`${writetoolsStyles.message} ${isDragging && writetoolsStyles.messageDragArea}`}>
-                      {renderMessage()}
+                      {renderMessage(newMessage, getMessageSizeClass, setShowPaperColorPicker, setNewMessageText)}
                     </div> 
                     :
-                    showDropMessageButton(messageForm, activeNavIndex, 3) && <DropMessageButton onClick={() => dropMessageInWritingtools(setMessageForm)}/>
+                    showDropMessageButton(newMessageForm, activeNavIndex, 3) && <DropMessageButton onClick={() => dropMessageInWritingtools(setNewMessageForm)}/>
                   }
                   <div className={`${writetoolsStyles.pencil}`}>
                     {renderPencil(pencilColor, showPencilColorPicker, setShowPencilColorPicker)}

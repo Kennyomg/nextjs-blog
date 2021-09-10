@@ -35,6 +35,7 @@
     display: block;
     top: 0;
     left: 0;
+    pointer-events: none;
 }
 .rim g {
     backdrop-filter: blur(5px);
@@ -59,4 +60,12 @@
 .item {
     max-height: 35px;
     max-width: 35px;
+}
+
+.message {
+    z-index: 99;
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
