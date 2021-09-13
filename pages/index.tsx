@@ -87,6 +87,15 @@ interface Message {
   pencilColor: string
 }
 
+interface MessageGroup extends Set<Message> {
+  length: number
+  [index: number]: Message
+}
+
+type MessageGroups = {
+  [key in MessageForm]: MessageGroup
+}
+
 interface FormProps {
   name: string,
   fields: FormField[]
@@ -417,7 +426,6 @@ const renderJarRim = () => (
 
 
 // Message render logic
-// TODO: Make generic and use for messages in jar and new message
 const renderMessage = (message: Message, getMessageSizeClass?, setShowPaperColorPicker?, setNewMessageText?, messageDragProps?) => {
   switch(message.messageForm) {
     case MessageForm.UNFOLDED:
@@ -460,6 +468,37 @@ const renderMessage = (message: Message, getMessageSizeClass?, setShowPaperColor
   }
 }
 
+// Combine messages of the same shape by introducing multi colored patterns
+const groupMessagesByForm = (messages: Set<Message>): MessageGroups => _.groupBy(Array.from(messages), (m: Message) => m.messageForm) as MessageGroups
+
+// Render Jar content
+const renderJarContent = (messages: Set<Message>, selectedGroup: MessageGroup, groupMessagesByForm, renderMessage, setSelectedGroup, setSelectedMessage, maxMessageOnTop = 52) => {
+  // Combine messages of the same shape by introducing multi colored patterns
+  const grouped: MessageGroups = groupMessagesByForm(messages)
+  console.log({messages}, messages.size <= maxMessageOnTop)
+  if (messages.size <= maxMessageOnTop) {
+    return _.map(Array.from(messages), (message: Message, index: number) => (
+      <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[message.messageForm]}`}>
+        {renderMessage(message, null, null, null, {onClick: () => (setSelectedGroup(null), setSelectedMessage(message))})}
+      </li>
+    ))
+  }
+  // Select a handful of message at random
+  return _.map(_.filter(grouped, (group: MessageGroup) => !_.isEqual(group, selectedGroup)), (group: MessageGroup, index) => 
+    <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[group[0].messageForm]}`}>
+      {group.length > 1 ? 
+        <div onClick={() => (setSelectedMessage(null), setSelectedGroup(group))}>{renderMessage(group[0])}</div>
+        : 
+        renderMessage(group[0], null, null, null, {onClick: () => (setSelectedGroup(null), setSelectedMessage(group[0]))})
+      }
+    </li>
+  )
+}
+
+const shakeJar = () => {
+
+}
+
 // Friendbook interactions
 const friendBookPageBack = prev => prev === 1 ? 0 : prev - 2
 const friendBookPageForward = prev => prev + 2
@@ -493,6 +532,7 @@ export default function Home() {
   const [ newMessageForm, setNewMessageForm ] = useState<MessageForm>(defaultMessage.messageForm)
 
   // Read message state
+  const [ selectedGroup, setSelectedGroup ] = useState<MessageGroup>(null)
   const [ selectedMessage, setSelectedMessage ] = useState<Message>(null)
   
   // Message dragging state 
@@ -513,14 +553,15 @@ export default function Home() {
   useEffect(() => {
     // if (!hasInitialMessages) {
       // let messages = new Set<Message>()
-      console.log("hi from effect")
+      // console.log("hi from effect")
       if (user.is) {
-        console.log("Effect acknowledges you're logged in")
+        // console.log("Effect acknowledges you're logged in")
         user.get('messages').map().on(({messageForm, messageText, paperColor, pencilColor}: Message, key) => {
           const message: Message = { messageForm, messageText, paperColor, pencilColor }
-          console.log({key, message, jarItemList})
+          // console.log({key, message, jarItemList})
           // messages.add(message)
           setJarItemList(prev => new Set<Message>(_.uniqWith([...Array.from(prev), message], _.isEqual)))
+          // console.log(groupMessagesByForm(jarItemList))
         }, true)
       }
 
@@ -626,7 +667,7 @@ export default function Home() {
   }
 
   const gotToPageIfInactive = (index: number) => (activeNavIndex !== index) && {onClick:goToPage(index)}
-  console.log({selectedMessage})
+  // console.log({selectedMessage})
 
   return (
     <Layout>
@@ -667,6 +708,11 @@ export default function Home() {
                       {renderMessage({...selectedMessage, messageForm: MessageForm.UNFOLDED}, getMessageSizeClass, null, null, {onClick: () => setSelectedMessage(null)})}
                     </div>
                   )}
+                  {selectedGroup && (
+                    <div className={`${jarStyles.group}`}>
+                      {_.map(selectedGroup, (message: Message) => renderMessage(message, null, null, null, {onClick: () => (setSelectedGroup(null), setSelectedMessage(message))}))}
+                    </div>
+                  )}
                   <div className={`${jarStyles.jar}`}>
                     {showDropMessageButton(newMessageForm, activeNavIndex, 0) && <DropMessageButton onClick={() => dropMessageInJar(newMessageForm, newMessageText, paperColor, pencilColor, setJarItemList, resetMessage)}/>}
                     <div className={jarStyles.bottom}>
@@ -674,12 +720,14 @@ export default function Home() {
                     </div>
                     <ul className={jarStyles.itemList}>
                       {
-                        Array.from(jarItemList).filter(x => x !== selectedMessage).map((item, index) => (
-                          <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[item.messageForm]}`}>
-                            {/* {jarItems[item.messageForm](item.paperColor, item.pencilColor)} */}
-                            { renderMessage(item, null, null, null, {onClick: () => setSelectedMessage(item)}) }
-                          </li>
-                        ))
+                        renderJarContent(new Set<Message>(Array.from(jarItemList).filter(x => x !== selectedMessage)), selectedGroup, groupMessagesByForm, renderMessage, setSelectedGroup, setSelectedMessage)
+                        
+                        // .map((item, index) => (
+                        //   <li key={`jarItem-${index}`} className={`${jarStyles.item} ${messageStyles[item.messageForm]}`}>
+                        //     {/* {jarItems[item.messageForm](item.paperColor, item.pencilColor)} */}
+                        //     { renderMessage(item, null, null, null, {onClick: () => setSelectedMessage(item)}) }
+                        //   </li>
+                        // ))
                       }
                     </ul>
                     <div className={jarStyles.rim}>

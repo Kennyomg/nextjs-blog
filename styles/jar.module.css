@@ -9,6 +9,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 12px;
 }
 
 .bottom {
@@ -49,17 +50,78 @@
     margin: 0;
     padding: 0;
     border-radius: var(--circle-radius);
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-areas: 
+        "firstRowStart firstRowStart firstRowStart . . firstRowEnd firstRowEnd firstRowEnd"
+        "secondRowStart secondRowStart . . . . secondRowEnd secondRowEnd"
+        ". . . . . . . ."
+        ". . . . . . . ."
+        ". . . . . . . ."
+        ". . . . . . . ."
+        "seventhRowStart seventhRowStart . . . . seventhRowEnd seventhRowEnd"
+        "eigthRowStart eigthRowStart eigthRowStart . . eigthRowEnd eigthRowEnd eigthRowEnd";
+    place-items: center;
+}
+
+.group {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    shape-outside: circle(50.0% at 50% 50%) padding-box;
+    flex-direction: row;
+    flex-wrap:wrap;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+.group > div {
+    width: 50px;
+    height: 50px;
 }
 
 .item {
     max-height: 35px;
     max-width: 35px;
+}
+
+.item:nth-child(1) {
+    grid-area: firstRowStart;
+    place-self: end;
+}
+
+.item:nth-child(4) {
+    grid-area: firstRowEnd;
+    place-self: start;
+}
+
+.item:nth-child(5) {
+    grid-area: secondRowStart;
+    place-self: end;
+}
+
+.item:nth-child(10) {
+    grid-area: secondRowEnd;
+    place-self: start;
+}
+
+.item:nth-child(43) {
+    grid-area: seventhRowStart;
+    place-self: end;
+}
+
+.item:nth-child(48) {
+    grid-area: seventhRowEnd;
+    place-self: start;
+}
+
+.item:nth-child(49) {
+    grid-area: eigthRowStart;
+    place-self: end;
+}
+
+.item:nth-child(52) {
+    grid-area: eigthRowEnd;
+    place-self: start;
 }
 
 .message {
